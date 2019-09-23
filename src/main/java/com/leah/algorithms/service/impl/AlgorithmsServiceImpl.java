@@ -803,9 +803,49 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         }
     }
 
+    public void swap(int[][] matrix, int i, int j, int newI, int newJ){
+        int temp = matrix[i][j];
+        matrix[i][j] = matrix[newI][newJ];
+        matrix[newI][newJ] = temp;
+    }
+
     @Override
     public void rotate(int[][] matrix){
+        if(matrix == null || matrix.length == 0){
+            return;
+        }
+        int m = matrix.length, n = matrix[0].length;
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n - i; j++){
+                swap(matrix, i, j, n - j - 1, n - i - 1);
+            }
+        }
 
+        for(int i = 0; i < m / 2; i++){
+            for(int j = 0; j < n; j++){
+                swap(matrix, i, j, m - i - 1, j);
+            }
+        }
+    }
+
+    @Override
+    public List<List<String>> groupAnagrams(String[] strs){
+        if(strs == null || strs.length == 0) return new ArrayList<>();
+        Map<String, List<String>> map = new HashMap<>();
+        for(int i = 0; i < strs.length; i++){
+            char[] charArr = strs[i].toCharArray();
+            Arrays.sort(charArr);
+            String key = new String(charArr);
+            if(map.containsKey(key)){
+                List<String> value = map.get(key);
+                value.add(strs[i]);
+            }else{
+                List<String> value = new ArrayList<>();
+                value.add(strs[i]);
+                map.put(key, value);
+            }
+        }
+        return new ArrayList(map.values());
     }
 
 

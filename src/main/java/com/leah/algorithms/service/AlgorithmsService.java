@@ -93,4 +93,9 @@ public interface AlgorithmsService {
     //https://leetcode.com/problems/rotate-image/
     public void rotate(int[][] matrix);
 
+    //https://leetcode.com/problems/group-anagrams/
+    public List<List<String>> groupAnagrams(String[] strs);
+
+
+
 }
