@@ -848,6 +848,50 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         return new ArrayList(map.values());
     }
 
+    @Override
+    public double myPow(double x, int n){
+        if(n == 0) return 1.0;
+        double half = myPow(x, n / 2);
+        if(n % 2 == 0) return half * half;
+        if(n > 0) return half * half * x;
+        return half * half / x;
+    }
+
+    @Override
+    public int maxSubArray(int[] nums){
+        //DP
+        if(nums == null || nums.length == 0) return 0;
+        int ans = nums[0];
+        int temp = nums[0];
+        for(int i = 1; i < nums.length; i++){
+            temp = Math.max(nums[i], temp + nums[i]);
+            ans = Math.max(temp, ans);
+        }
+
+        return ans;
+    }
+
+    @Override
+    public List<Integer> findDuplicates(int[] nums) {
+        List<Integer> ans = new ArrayList();
+        for(int i = 0; i < nums.length; i++){
+            nums[Math.abs(nums[i]) - 1] = nums[Math.abs(nums[i]) - 1] * -1;
+            if(nums[Math.abs(nums[i]) - 1] > 0){
+                ans.add(Math.abs(nums[i]));
+            }
+        }
+
+        return ans;
+    }
+
+  /*  @Override
+    public List<Integer> spiralOrder(int[][] matrix){
+
+
+        List<Integer> ans = new ArrayList<>();
+        if(matrix == null || matrix.length == 0 || matrix[0].length == 0) return ans;
+
+    }*/
 
 
 

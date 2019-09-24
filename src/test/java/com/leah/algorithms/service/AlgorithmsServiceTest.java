@@ -170,10 +170,21 @@ public class AlgorithmsServiceTest {
         assertEquals(2, algorithmsService.firstMissingPositive(new int[]{1,1,1,1}));
     }
 
-
+    @Ignore
     @Test
     public void testTrap(){
         assertEquals(6, algorithmsService.trap(new int[]{0,1,0,2,1,0,1,3,2,1,2,1}));
+    }
+
+    @Ignore
+    @Test
+    public void testMyPow(){
+        assertEquals(0.25000, algorithmsService.myPow(2.00000, -2), .0);
+    }
+
+    @Test
+    public void testMaxSubArray(){
+        assertEquals(6, algorithmsService.maxSubArray(new int[]{-2,1,-3,4,-1,2,1,-5,4}));
     }
 
 }

@@ -96,6 +96,15 @@ public interface AlgorithmsService {
     //https://leetcode.com/problems/group-anagrams/
     public List<List<String>> groupAnagrams(String[] strs);
 
+    //https://leetcode.com/problems/powx-n/
+    public double myPow(double x, int n);
 
+    //https://leetcode.com/problems/maximum-subarray/submissions/
+    public int maxSubArray(int[] nums);
 
+    //https://leetcode.com/problems/find-all-duplicates-in-an-array/submissions/
+    public List<Integer> findDuplicates(int[] nums);
+
+    //https://leetcode.com/problems/spiral-matrix/
+    public List<Integer> spiralOrder(int[][] matrix);
 }
