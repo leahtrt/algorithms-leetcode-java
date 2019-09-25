@@ -107,4 +107,16 @@ public interface AlgorithmsService {
 
     //https://leetcode.com/problems/spiral-matrix/
     public List<Integer> spiralOrder(int[][] matrix);
+
+    //https://leetcode.com/problems/jump-game/
+    public boolean canJump(int[] nums);
+
+    //https://leetcode.com/problems/merge-intervals/
+    public int[][] merge(int[][] intervals);
+
+    //https://leetcode.com/problems/unique-paths/
+    public int uniquePaths(int m, int n);
+
+    //https://leetcode.com/problems/plus-one/
+    public int[] plusOne(int[] digits);
 }

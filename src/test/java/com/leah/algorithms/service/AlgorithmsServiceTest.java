@@ -182,9 +182,54 @@ public class AlgorithmsServiceTest {
         assertEquals(0.25000, algorithmsService.myPow(2.00000, -2), .0);
     }
 
+    @Ignore
     @Test
     public void testMaxSubArray(){
         assertEquals(6, algorithmsService.maxSubArray(new int[]{-2,1,-3,4,-1,2,1,-5,4}));
     }
+
+    @Ignore
+    @Test
+    public void testCanJump(){
+        assertEquals(true, algorithmsService.canJump(new int[]{3,6,1,0,4}));
+    }
+
+    @Ignore
+    @Test
+    public void testMerge(){
+        int[][] exp = new int[][]{
+                {1,6},
+                {8,10},
+                {15,18}
+        };
+        int[][] interval = new int[][]{
+                {1,2},
+                {3,6},
+                {2,3},
+                {8,10},
+                {15,18}
+        };
+        assertArrayEquals(exp, algorithmsService.merge(interval));
+    }
+
+    @Ignore
+    @Test
+    public void testUniquePaths(){
+        assertEquals(28, algorithmsService.uniquePaths(7,3));
+    }
+
+
+    @Test
+    public void testPlusOne(){
+        assertArrayEquals(new int[]{1}, algorithmsService.plusOne(new int[]{0}));
+    }
+
+
+
+
+
+
+
+
 
 }

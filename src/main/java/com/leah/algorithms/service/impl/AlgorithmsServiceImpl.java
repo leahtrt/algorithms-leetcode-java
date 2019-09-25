@@ -884,14 +884,125 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         return ans;
     }
 
-  /*  @Override
+    @Override
     public List<Integer> spiralOrder(int[][] matrix){
-
-
         List<Integer> ans = new ArrayList<>();
         if(matrix == null || matrix.length == 0 || matrix[0].length == 0) return ans;
+        int m = matrix.length, n = matrix[0].length;
+        int up = 0, down = m - 1, left = 0, right = n - 1;
+        while (true){
+            for(int i = left; i < right + 1; i++){
+                ans.add(matrix[up][i]);
+            }
+            if(++up > down) break;
+            for(int i = up; i < down + 1; i++){
+                ans.add(matrix[i][right]);
+            }
+            if(left > --right) break;
+            for(int i = right; i >= left; i--){
+                ans.add(matrix[down][i]);
+            }
+            if(up > --down) break;
+            for(int i = down; i >= up; i--){
+                ans.add(matrix[i][left]);
+            }
+            if(++left > right) break;
+        }
+        return ans;
+    }
 
-    }*/
+    @Override
+    public boolean canJump(int[] nums){
+        if(nums == null || nums.length == 0) return false;
+        int n = nums.length;
+        int reach = 0;
+        for(int i = 0; i < n; i++){
+            if(reach >= nums.length || i > reach) break;
+            else{
+                reach = Math.max(reach, nums[i] + i);
+            }
+        }
+        return reach >= n - 1;
+    }
+
+    @Override
+    public int[][] merge(int[][] intervals){
+        if (intervals == null || intervals.length == 0) return intervals;
+        Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
+        List<List<Integer>> list = new ArrayList<>();
+        for(int i = 0; i < intervals.length; i++){
+            if(list.isEmpty() || list.get(list.size() - 1).get(1) < intervals[i][0]){
+                List<Integer> item = new ArrayList<>();
+                item.add(intervals[i][0]);
+                item.add(intervals[i][1]);
+                list.add(item);
+            }
+            else{
+                List<Integer> item = new ArrayList<>();
+                item.add(list.get(list.size() - 1).get(0));
+                item.add(Math.max(intervals[i][1], list.get(list.size() - 1).get(1)));
+                list.remove(list.size() - 1);
+                list.add(item);
+            }
+        }
+
+        int[][] ans = new int[list.size()][2];
+        for(int i = 0; i < list.size(); i++){
+            ans[i][0] = list.get(i).get(0);
+            ans[i][1] = list.get(i).get(1);
+        }
+        return ans;
+    }
+
+
+    @Override
+    public int uniquePaths(int m, int n){
+        if(m <= 0 || n <= 0) return 0;
+        int[][] dp = new int[m][n];
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(i > 0 && j > 0){
+                    dp[i][j] = dp[i-1][j] + dp[i][j-1];
+                }else if(i > 0 && j == 0){
+                    dp[i][j] = dp[i-1][j];
+                }else if(i == 0 && j > 0){
+                    dp[i][j] = dp[i][j-1];
+                }else if(i == 0 && j == 0){
+                    dp[i][j] = 1;
+                }
+            }
+        }
+        return dp[m-1][n-1];
+    }
+
+    @Override
+    public int[] plusOne(int[] digits){
+        if(digits == null || digits.length == 0) return digits;
+        int carry = 1;
+        List<Integer> list = new ArrayList<>();
+        for(int i = digits.length - 1; i >= 0; i--){
+            int sum = digits[i] + carry;
+            if(sum >= 10){
+                carry = 1;
+                list.add(sum - 10);
+            }else{
+                list.add(sum);
+                carry = 0;
+            }
+        }
+        if(carry == 1){
+            list.add(1);
+        }
+
+        int[] ans = new int[list.size()];
+        for(int i = list.size() - 1, j = 0; i >= 0; i--, j++){
+            ans[j] = list.get(i);
+        }
+        return ans;
+    }
+
+
+
 
 
 
