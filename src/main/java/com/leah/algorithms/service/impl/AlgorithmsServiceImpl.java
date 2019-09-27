@@ -1107,16 +1107,17 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
             map.put(t.charAt(i), map.get(t.charAt(i)) + 1);
         }
         int start  = 0, end = 0, counter = t.length(), minLen = Integer.MAX_VALUE;
+        int minStart = 0;
         String res = "";
         while (end < s.length()){
-            char c = s.charAt(end);
-            if(map.get(c) > 0) counter--;
-            map.put(c, map.get(c) - 1);
+            char cur  = s.charAt(end);
+            if(map.get(cur) > 0) counter--;
+            map.put(cur, map.get(cur) - 1);
 
             while (counter == 0){
                 if(minLen > end - start  + 1){
                     minLen = end - start  + 1;
-                    res = s.substring(start , minLen);
+                    minStart = start;
                 }
                 char c2 = s.charAt(start);
                 map.put(c2, map.get(c2) + 1);
@@ -1126,7 +1127,7 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
             end++;
         }
 
-        return res;
+        return minLen==Integer.MAX_VALUE?"":s.substring(minStart, minStart+minLen);
 
     }
 
