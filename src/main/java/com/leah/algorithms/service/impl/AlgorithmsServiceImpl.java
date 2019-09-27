@@ -1104,7 +1104,10 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         HashMap<Character, Integer> map = new HashMap<>();
         for(char c:s.toCharArray())map.put(c,0);
         for(int i = 0; i < t.length(); i++){
-            map.put(t.charAt(i), map.get(t.charAt(i)) + 1);
+            if(map.containsKey(t.charAt(i)))
+                map.put(t.charAt(i),map.get(t.charAt(i))+1);
+            else
+                return "";
         }
         int start  = 0, end = 0, counter = t.length(), minLen = Integer.MAX_VALUE;
         int minStart = 0;
