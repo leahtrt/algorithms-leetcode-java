@@ -218,12 +218,36 @@ public class AlgorithmsServiceTest {
         assertEquals(28, algorithmsService.uniquePaths(7,3));
     }
 
-
+    @Ignore
     @Test
     public void testPlusOne(){
         assertArrayEquals(new int[]{1}, algorithmsService.plusOne(new int[]{0}));
     }
 
+    @Ignore
+    @Test
+    public void testMySqrt(){
+        assertEquals(46339, algorithmsService.mySqrt(2147395599));
+    }
+
+    @Ignore
+    @Test
+    public void testClimbStairs(){
+        assertEquals(5, algorithmsService.climbStairs(4));
+    }
+
+    @Ignore
+    @Test
+    public void testSortColor(){
+        int[] nums = new int[]{1};
+        algorithmsService.sortColors(nums);
+        assertArrayEquals(new int[]{1}, nums);
+    }
+
+    @Test
+    public void testMinWindow(){
+        assertEquals("BANC", algorithmsService.minWindow("ADOBECODEBANC", "ABC"));
+    }
 
 
 

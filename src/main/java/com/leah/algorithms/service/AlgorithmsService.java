@@ -119,4 +119,19 @@ public interface AlgorithmsService {
 
     //https://leetcode.com/problems/plus-one/
     public int[] plusOne(int[] digits);
+
+    //https://leetcode.com/problems/sqrtx/
+    public int mySqrt(int x);
+
+    //https://leetcode.com/problems/climbing-stairs/
+    public int climbStairs(int n);
+
+    //https://leetcode.com/problems/set-matrix-zeroes/
+    public void setZeroes(int[][] matrix);
+
+    //https://leetcode.com/problems/sort-colors/
+    public void sortColors(int[] nums);
+
+    //https://leetcode.com/problems/minimum-window-substring/
+    public String minWindow(String s, String t);
 }

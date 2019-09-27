@@ -1001,8 +1001,134 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         return ans;
     }
 
+    @Override
+    public int mySqrt(int x){
+        if(x == 1) return 1;
+        int left = 1, right = x;
+        while (left <= right){
+            int mid = left + (right - left) / 2;
+            long midX = (long) mid * mid;
+            if(midX == x){
+                return mid;
+            }else if(midX > x){
+                right = mid - 1;
+            }else{
+                left = mid + 1;
+            }
+        }
+        return right;
+    }
 
+    @Override
+    public int climbStairs(int n){
+        if(n <= 0) return 0;
+        int[] dp = new int[n];
+        dp[0] = 1;
+        if(n > 1){
+            dp[1] = 2;
+        }
+        for(int i = 2; i < n; i++){
+            dp[i] = dp[i-1] + dp[i-2];
+        }
+        return dp[n - 1];
+    }
 
+    @Override
+    public void setZeroes(int[][] matrix){
+        if(matrix == null || matrix.length == 0 || matrix[0].length == 0) return;
+        int MARKER = 10000011;
+        int m = matrix.length, n = matrix[0].length;
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(matrix[i][j] == 0){
+                    for(int p = 0; p < m; p++){
+                        if(matrix[p][j] != 0){
+                            matrix[p][j] = MARKER;
+                        }
+                    }
+                    for(int q = 0; q < n; q++){
+                        if(matrix[i][q] != 0){
+                            matrix[i][q] = MARKER;
+                        }
+                    }
+                }
+            }
+        }
+
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(matrix[i][j] == MARKER){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+
+    public void sortColors(int[] nums){
+        int blue = nums.length - 1, red = 0;
+        //one pass
+        for(int i = 0; i <= blue; i++){
+            if(nums[i] == 2){
+                swap(nums, i--, blue--);
+            }
+            else if(nums[i] == 0){
+                swap(nums, i, red++);
+            }
+        }
+/*
+        //two pass
+        for(int i = 0; i < nums.length; i++){
+            while (blue > -1 && nums[blue] == 2){
+                blue--;
+            }
+            if(i < blue && nums[i] == 2){
+                swap(nums, i, blue--);
+            }else{
+                continue;
+            }
+        }
+        for(int i = 0; i < nums.length; i++){
+            while ( red < nums.length - 1 && nums[red] == 0){
+                red++;
+            }
+            if(i > red && nums[i] == 0){
+                swap(nums, i, red++);
+            }else{
+                continue;
+            }
+        }*/
+    }
+
+    public String minWindow(String s, String t){
+        if(s.isEmpty() || t.isEmpty()) return "";
+        HashMap<Character, Integer> map = new HashMap<>();
+        for(char c:s.toCharArray())map.put(c,0);
+        for(int i = 0; i < t.length(); i++){
+            map.put(t.charAt(i), map.get(t.charAt(i)) + 1);
+        }
+        int start  = 0, end = 0, counter = t.length(), minLen = Integer.MAX_VALUE;
+        String res = "";
+        while (end < s.length()){
+            char c = s.charAt(end);
+            if(map.get(c) > 0) counter--;
+            map.put(c, map.get(c) - 1);
+
+            while (counter == 0){
+                if(minLen > end - start  + 1){
+                    minLen = end - start  + 1;
+                    res = s.substring(start , minLen);
+                }
+                char c2 = s.charAt(start);
+                map.put(c2, map.get(c2) + 1);
+                if(map.get(c2) > 0) counter++;
+                start ++;
+            }
+            end++;
+        }
+
+        return res;
+
+    }
 
 
 
