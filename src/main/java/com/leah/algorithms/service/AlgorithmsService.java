@@ -134,4 +134,7 @@ public interface AlgorithmsService {
 
     //https://leetcode.com/problems/minimum-window-substring/
     public String minWindow(String s, String t);
+
+    //https://leetcode.com/problems/subsets/
+    public List<List<Integer>> subsets(int[] nums);
 }

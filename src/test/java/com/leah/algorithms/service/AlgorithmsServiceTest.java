@@ -244,10 +244,12 @@ public class AlgorithmsServiceTest {
         assertArrayEquals(new int[]{1}, nums);
     }
 
+    @Ignore
     @Test
     public void testMinWindow(){
         assertEquals("BANC", algorithmsService.minWindow("ADOBECODEBANC", "ABC"));
     }
+
 
 
 
