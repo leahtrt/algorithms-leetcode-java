@@ -1,6 +1,7 @@
 package com.leah.algorithms.service;
 
 import com.leah.algorithms.datastructure.ListNode;
+import com.leah.algorithms.datastructure.TreeNode;
 
 import java.util.List;
 
@@ -146,4 +147,10 @@ public interface AlgorithmsService {
 
     //https://leetcode.com/problems/merge-sorted-array/
     public void merge(int[] nums1, int m, int[] nums2, int n);
+
+    //https://leetcode.com/problems/decode-ways/
+    public int numDecodings(String s);
+
+    //https://leetcode.com/problems/binary-tree-inorder-traversal/
+    public List<Integer> inorderTraversal(TreeNode root);
 }

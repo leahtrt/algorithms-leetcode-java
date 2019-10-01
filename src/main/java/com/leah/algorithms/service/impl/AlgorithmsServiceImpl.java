@@ -1,6 +1,7 @@
 package com.leah.algorithms.service.impl;
 
 import com.leah.algorithms.datastructure.ListNode;
+import com.leah.algorithms.datastructure.TreeNode;
 import com.leah.algorithms.service.AlgorithmsService;
 import org.springframework.stereotype.Component;
 import sun.nio.cs.ext.MacArabic;
@@ -1194,6 +1195,7 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         boolean res = existBfs(board, word, count + 1, i+1, j) || existBfs(board, word, count + 1, i-1, j)
                 || existBfs(board, word, count + 1, i, j+1) || existBfs(board, word, count + 1, i, j-1);
         board[i][j] = c;
+
         return res;
     }
 
@@ -1234,6 +1236,42 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         }
     }
 
+    @Override
+    public int numDecodings(String s){
+        if(s.isEmpty()) return 0;
+        int len = s.length();
+        int[] dp = new int[len + 1];
+        if(s.charAt(0) == '0'){
+            dp[0] = 0;
+        }else{
+            dp[0] = 1;
+        }
+        for(int i = 1; i <= len; i++){
+            dp[i] = (s.charAt(i - 1) == '0') ? 0 : dp[i - 1];
+            if(i >= 2 && (s.charAt(i - 2) == '1' || (s.charAt(i - 2) == '2' && s.charAt(i - 1) < '7'))){
+                dp[i] = dp[i] + dp[i-2];
+            }
+        }
+        return dp[len];
+    }
+
+    @Override
+    public List<Integer> inorderTraversal(TreeNode root){
+        List<Integer> ans = new ArrayList();
+        inorderHelper(root, ans);
+        return ans;
+    }
+    public void inorderHelper(TreeNode root, List<Integer> ans){
+        if(root != null){
+            if(root.left != null){
+                inorderHelper(root.left, ans);
+            }
+            ans.add(root.val);
+            if(root.right != null){
+                inorderHelper(root.right, ans);
+            }
+        }
+    }
 
 
 
