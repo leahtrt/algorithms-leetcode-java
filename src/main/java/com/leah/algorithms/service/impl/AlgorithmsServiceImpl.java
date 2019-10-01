@@ -1099,6 +1099,7 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         }*/
     }
 
+    @Override
     public String minWindow(String s, String t){
         if(s.isEmpty() || t.isEmpty()) return "";
         HashMap<Character, Integer> map = new HashMap<>();
@@ -1134,9 +1135,11 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
 
     }
 
+    public List<List<Integer>> ans = new ArrayList<>();
+
     @Override
     public List<List<Integer>> subsets(int[] nums){
-        Arrays.sort(nums);
+   /*     Arrays.sort(nums);
         List<List<Integer>> ans = new ArrayList<>();
         ans.add(new ArrayList<>());
         for(int i = 0; i < nums.length; i++){
@@ -1148,9 +1151,89 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
             }
         }
 
+        return ans;*/
+        List<Integer> temp = new ArrayList<>();
+        Arrays.sort(nums);
+        dfs(nums, 0, temp);
         return ans;
-
     }
+
+
+    public void  dfs(int[] nums, int i, List<Integer> temp){
+        if(i == nums.length){
+            ans.add(new ArrayList<>(temp));
+        }else{
+            temp.add(nums[i]);
+            dfs(nums, i+1, temp);
+            temp.remove(temp.size() - 1);
+            dfs(nums, i+1, temp);
+        }
+    }
+
+    @Override
+    public boolean exist(char[][] board, String word){
+        if(board == null || board.length == 0 || board[0].length == 0) return false;
+        if(word == "") return false;
+        for(int i = 0; i < board.length; i++){
+            for(int j = 0; j < board[0].length; j++){
+                if(existBfs(board, word, 0, i, j)) return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean existBfs(char[][] board, String word, int count, int i, int j){
+        if(i < 0 || j < 0 || i >= board.length || j >= board[0].length || board[i][j] != word.charAt(count)){
+            return false;
+        }
+        if(count == word.length() - 1){
+            return true;
+        }
+        char c = board[i][j];
+        board[i][j] = '#';
+        boolean res = existBfs(board, word, count + 1, i+1, j) || existBfs(board, word, count + 1, i-1, j)
+                || existBfs(board, word, count + 1, i, j+1) || existBfs(board, word, count + 1, i, j-1);
+        board[i][j] = c;
+        return res;
+    }
+
+    @Override
+    public int largestRectangleArea(int[] heights){
+        if(heights == null || heights.length == 0) return 0;
+        int res = 0;
+        //每找到一个局部峰值（只要当前的数字大于后面的一个数字，那么当前数字就看作一个局部峰值，跟前面的数字大小无关），然后向前遍历所有的值，算出共同的矩形面积，每次对比保留最大值
+        for(int i = 0; i < heights.length; i++){
+            if(i + 1 < heights.length && heights[i] <= heights[i+1]){
+                continue;
+            }
+            int maxH = heights[i];
+            for(int j = i; j >= 0; j--){
+                maxH = Math.min(maxH, heights[j]);
+                int width = i - j + 1;
+                res = Math.max(res, maxH * width);
+            }
+        }
+        return res;
+    }
+
+    @Override
+    public void merge(int[] nums1, int m, int[] nums2, int n){
+        int i = m - 1, j = n - 1;
+        int len = m + n;
+        while(i >= 0 && j >= 0){
+            if(nums1[i] >= nums2[j]){
+                nums1[len - 1] = nums1[i--];
+            }else{
+                nums1[len - 1] = nums2[j--];
+            }
+            len--;
+        }
+        while(j >= 0){
+            nums1[len - 1] = nums2[j--];
+            len--;
+        }
+    }
+
 
 
 

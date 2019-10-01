@@ -137,4 +137,13 @@ public interface AlgorithmsService {
 
     //https://leetcode.com/problems/subsets/
     public List<List<Integer>> subsets(int[] nums);
+
+    //https://leetcode.com/problems/word-search/
+    public boolean exist(char[][] board, String word);
+
+    //https://leetcode.com/problems/largest-rectangle-in-histogram/
+    public int largestRectangleArea(int[] heights);
+
+    //https://leetcode.com/problems/merge-sorted-array/
+    public void merge(int[] nums1, int m, int[] nums2, int n);
 }
