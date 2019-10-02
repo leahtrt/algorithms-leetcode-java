@@ -153,4 +153,8 @@ public interface AlgorithmsService {
 
     //https://leetcode.com/problems/binary-tree-inorder-traversal/
     public List<Integer> inorderTraversal(TreeNode root);
+
+    public boolean isValidBST(TreeNode root);
+
+    public boolean isSymmetric(TreeNode root);
 }
