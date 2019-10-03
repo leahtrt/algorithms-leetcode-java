@@ -1295,8 +1295,31 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
 
     @Override
     public boolean isSymmetric(TreeNode root){
-        //recursive
-        return isMirror(root, root);
+ /*       //recursive
+        return isMirror(root, root);*/
+        //iterative
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        q.add(root);
+        while(!q.isEmpty()){
+            TreeNode t1 = q.poll();
+            TreeNode t2 = q.poll();
+            if(t1 == null && t2 == null){
+                continue;
+            }
+            if(t1 == null || t2 == null){
+                return false;
+            }
+            if(t1.val != t2.val){
+                return false;
+            }
+            q.add(t1.left);
+            q.add(t2.right);
+            q.add(t1.right);
+            q.add(t2.left);
+        }
+
+        return true;
     }
     public boolean isMirror(TreeNode left, TreeNode right){
         if(left == null && right != null){
@@ -1313,5 +1336,89 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         }
         return false;
     }
+
+    @Override
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        /*//iterative
+        List<List<Integer>> ans = new ArrayList<>();
+        if(root == null) return ans;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        while(!q.isEmpty()){
+            List<Integer> item = new ArrayList<>();
+            int size = q.size();
+            for(int i = 0; i < size; i++){
+                TreeNode t = q.poll();
+                item.add(t.val);
+                if(t.left != null){
+                    q.add(t.left);
+                }
+                if(t.right != null){
+                    q.add(t.right);
+                }
+            }
+            ans.add(item);
+        }
+        return ans;*/
+
+        //recursive
+        List<List<Integer>> ans = new ArrayList<>();
+        levelOrderDfs(root, 0, ans);
+        return ans;
+    }
+
+    public void levelOrderDfs(TreeNode t, int level, List<List<Integer>> ans){
+        if(t == null) return;
+        if(level >= ans.size()){
+            ans.add(new ArrayList<>());
+        }
+        ans.get(level).add(t.val);
+        levelOrderDfs(t.left, level+1, ans);
+        levelOrderDfs(t.right, level+1, ans);
+    }
+
+    @Override
+    public List<List<Integer>> levelOrderBottom(TreeNode root){
+        //recursive
+        List<List<Integer>> ans = new ArrayList<>();
+        levelOrderDfs(root, 0, ans);
+        Collections.reverse(ans);
+        return ans;
+
+      /*  //iterative
+        List<List<Integer>> ans = new ArrayList<>();
+        if(root == null) return ans;
+        Stack<List<Integer>> stack = new Stack<>();
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        while(!q.isEmpty()){
+            List<Integer> item = new ArrayList();
+            int size = q.size();
+            for(int i = 0; i < size; i++){
+                TreeNode t = q.poll();
+                item.add(t.val);
+                if(t.left != null){
+                    q.add(t.left);
+                }
+                if(t.right != null){
+                    q.add(t.right);
+                }
+            }
+            stack.add(item);
+        }
+
+        while(!stack.isEmpty()){
+            ans.add(stack.pop());
+        }
+        return ans;*/
+    }
+
+
+
+
+
+
+
+
 
 }

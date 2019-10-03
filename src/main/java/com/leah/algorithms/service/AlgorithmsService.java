@@ -157,4 +157,10 @@ public interface AlgorithmsService {
     public boolean isValidBST(TreeNode root);
 
     public boolean isSymmetric(TreeNode root);
+
+    //102. https://leetcode.com/problems/binary-tree-level-order-traversal/
+    public List<List<Integer>> levelOrder(TreeNode root);
+
+    //107. https://leetcode.com/problems/binary-tree-level-order-traversal-ii/
+    public List<List<Integer>> levelOrderBottom(TreeNode root);
 }
