@@ -1,6 +1,7 @@
 package com.leah.algorithms.service;
 
 import com.leah.algorithms.datastructure.ListNode;
+import com.leah.algorithms.datastructure.TreeNode;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;

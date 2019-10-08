@@ -163,4 +163,16 @@ public interface AlgorithmsService {
 
     //107. https://leetcode.com/problems/binary-tree-level-order-traversal-ii/
     public List<List<Integer>> levelOrderBottom(TreeNode root);
+
+    //103. https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root);
+
+    //104. https://leetcode.com/problems/maximum-depth-of-binary-tree/
+    public int maxDepth(TreeNode root);
+
+    //105. https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
+    public TreeNode buildTree(int[] preorder, int[] inorder);
+
+    //106. https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/
+    public TreeNode buildTreeTwo(int[] inorder, int[] postorder);
 }

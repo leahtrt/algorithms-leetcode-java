@@ -1413,6 +1413,142 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         return ans;*/
     }
 
+    @Override
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root){
+  /*      //iterative
+        List<List<Integer>> ans = new ArrayList<>();
+        if(root == null) return ans;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        int count = 1;
+        while(!q.isEmpty()){
+            int size = q.size();
+            Stack<Integer> s = new Stack<>();
+            List<Integer> l = new ArrayList<>();
+            for(int i = 0; i < size; i++){
+                TreeNode t = q.poll();
+                if(count % 2 == 0){
+                    s.push(t.val);
+                }else{
+                    l.add(t.val);
+                }
+                if(t.left != null){
+                    q.add(t.left);
+                }
+                if(t.right != null){
+                    q.add(t.right);
+                }
+
+            }
+            if(count % 2 == 0){
+                while(!s.isEmpty()){
+                    l.add(s.peek());
+                    s.pop();
+                }
+                ans.add(l);
+            }else{
+                ans.add(l);
+            }
+            count++;
+        }
+        return ans;*/
+
+        //recursive
+        List<List<Integer>> ans = new ArrayList<>();
+        if(root == null) return ans;
+        leverOrderZigzagDfs(root, 0, ans);
+        return ans;
+    }
+
+
+    public void leverOrderZigzagDfs(TreeNode t, int level, List<List<Integer>> ans){
+        if(t == null) return;
+        if(level >= ans.size()){
+            ans.add(new ArrayList<>());
+        }
+        if(level % 2 == 0){
+            ans.get(level).add(t.val);
+        }else{
+            ans.get(level).add(0, t.val);//add to the beginning of the list
+        }
+        leverOrderZigzagDfs(t.left, level+1, ans);
+        leverOrderZigzagDfs(t.right, level+1, ans);
+    }
+
+    @Override
+    public int maxDepth(TreeNode root){
+        if(root == null){
+            return 0;
+        }
+        return Math.max(maxDepth(root.left) + 1, maxDepth(root.right) + 1);
+
+/*        int ans = 0;
+        if(root == null) return ans;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        while(!q.isEmpty()){
+            ans++;
+            int size = q.size();
+            for(int i = 0; i < size; i++){
+                TreeNode t = q.poll();
+                if(t.left != null){
+                    q.add(t.left);
+                }
+                if(t.right != null){
+                    q.add(t.right);
+                }
+            }
+        }
+        return ans;*/
+    }
+
+    @Override
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        return buildTreeHelper(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
+    }
+
+    public TreeNode buildTreeHelper(int[] preorder, int pLeft, int pRight, int[] inorder, int iLeft, int iRight){
+        if(pLeft > pRight || iLeft > iRight){
+            return null;
+        }
+
+        int i = 0;
+        for(i = iLeft;i <= iRight; i++){
+            if(preorder[pLeft] == inorder[i]){
+                break;
+            }
+        }
+        TreeNode t = new TreeNode(preorder[pLeft]);
+        t.left = buildTreeHelper(preorder, pLeft + 1, pLeft + i - iLeft, inorder, iLeft, i - 1);
+        t.right = buildTreeHelper(preorder, pLeft + i - iLeft + 1, pRight, inorder, i+1, iRight);
+        return t;
+    }
+    @Override
+    public TreeNode buildTreeTwo(int[] inorder, int[] postorder) {
+        return buildTreeHelperTwo(inorder, 0, inorder.length-1, postorder, 0, postorder.length-1);
+    }
+
+    public TreeNode buildTreeHelperTwo(int[] inorder, int iLeft, int iRight, int[] postorder, int pLeft, int pRight){
+        if(iLeft > iRight || pLeft > pRight){
+            return null;
+        }
+        TreeNode t = new TreeNode(postorder[pRight]);
+        int i = 0;
+        for(i = iLeft; i <= iRight; i++){
+            if(inorder[i] == postorder[pRight]){
+                break;
+            }
+        }
+        t.left = buildTreeHelperTwo(inorder, iLeft, i-1, postorder, pLeft, i-iLeft+pLeft - 1);
+        t.right = buildTreeHelperTwo(inorder, i + 1, iRight, postorder,i-iLeft+pLeft, pRight - 1 );
+        return t;
+    }
+
+
+
+
+
+
 
 
 
