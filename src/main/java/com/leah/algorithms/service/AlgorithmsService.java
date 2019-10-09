@@ -1,6 +1,7 @@
 package com.leah.algorithms.service;
 
 import com.leah.algorithms.datastructure.ListNode;
+import com.leah.algorithms.datastructure.Node;
 import com.leah.algorithms.datastructure.TreeNode;
 
 import java.util.List;
@@ -175,4 +176,19 @@ public interface AlgorithmsService {
 
     //106. https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/
     public TreeNode buildTreeTwo(int[] inorder, int[] postorder);
+
+    //108. https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/
+    public TreeNode sortedArrayToBST(int[] nums);
+
+    //110. https://leetcode.com/problems/balanced-binary-tree/
+    public boolean isBalanced(TreeNode root);
+
+    //100. https://leetcode.com/problems/same-tree/
+    public boolean isSameTree(TreeNode p, TreeNode q);
+
+    //124. https://leetcode.com/problems/binary-tree-maximum-path-sum/
+    public int maxPathSum(TreeNode root);
+
+    //116. https://leetcode.com/problems/populating-next-right-pointers-in-each-node/
+    public Node connect(Node root);
 }

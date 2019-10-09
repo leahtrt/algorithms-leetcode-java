@@ -1,6 +1,7 @@
 package com.leah.algorithms.service.impl;
 
 import com.leah.algorithms.datastructure.ListNode;
+import com.leah.algorithms.datastructure.Node;
 import com.leah.algorithms.datastructure.TreeNode;
 import com.leah.algorithms.service.AlgorithmsService;
 import org.springframework.stereotype.Component;
@@ -1544,12 +1545,105 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         return t;
     }
 
+    @Override
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return helperBST(nums);
+    }
+
+    public TreeNode helperBST(int[] nums){
+        if(nums.length == 0){
+            return null;
+        }
+        int mid = nums.length / 2;
+        TreeNode t = new TreeNode(nums[mid]);
+        t.left = helperBST(Arrays.copyOfRange(nums, 0, mid));
+        t.right = helperBST(Arrays.copyOfRange(nums, mid+1, nums.length));
+        return t;
+    }
+
+    @Override
+    public boolean isBalanced(TreeNode root) {
+        if(root == null) return true;
+        int maxLeft = depth(root.left);
+        int maxRight = depth(root.right);
+        if(Math.abs(maxLeft - maxRight) > 1){
+            return false;
+        }
+        else{
+            return isBalanced(root.left) && isBalanced(root.right);
+        }
+    }
+
+    public int depth(TreeNode t){
+        if(t == null){
+            return 0;
+        }
+        return Math.max(depth(t.left), depth(t.right)) + 1;
+    }
+
+    @Override
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        return sameTreeHelper(p, q);
+    }
+
+    public boolean sameTreeHelper(TreeNode p, TreeNode q){
+        if(p == null && q == null) return true;
+        if(p == null || q == null) return false;
+        if(p.val == q.val) return sameTreeHelper(p.left, q.left) && sameTreeHelper(p.right, q.right);
+        else return false;
+    }
 
 
+    public int res = Integer.MIN_VALUE;
+    @Override
+    public int maxPathSum(TreeNode root) {
+        maxPathSumHelper(root);
+        return res;
+    }
 
+    public int maxPathSumHelper(TreeNode t){
+        if(t == null) return 0;
+        int left = Math.max(maxPathSumHelper(t.left), 0);
+        int right = Math.max(maxPathSumHelper(t.right), 0);
+        res = Math.max(res, left + right + t.val);
+        return Math.max(left, right) + t.val;
+    }
 
+    @Override
+    public Node connect(Node root) {
+      /*  //recursive
+        if(root == null) return null;
+        if(root.right != null){
+            root.right.next = root.next == null ? null : root.next.left;
+        }
+        if(root.left != null){
+            root.left.next = root.right;
+        }
 
-
+        connect(root.left);
+        connect(root.right);
+        return root;*/
+      //iterative
+        if(root == null) return root;
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        while(!q.isEmpty()){
+            int size = q.size();
+            for(int i = 0; i < size; i++){
+                Node n = q.poll();
+                if(i < size - 1){
+                    n.next = q.peek();
+                }
+                if(n.left != null){
+                    q.add(n.left);
+                }
+                if(n.right != null){
+                    q.add(n.right);
+                }
+            }
+        }
+        return root;
+    }
 
 
 
