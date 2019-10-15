@@ -53,14 +53,14 @@ public class AlgorithmsServiceTest {
         assertEquals(3, algorithmsService.lengthOfLongestSubstring("pwwkew"));
     }
 
-    @Ignore
+
     @Test
     public void testIsPalindrome(){
         assertEquals(true, algorithmsService.isPalindrome("A man, a plan, a canal: Panama"));
         assertEquals(false, algorithmsService.isPalindrome("race a car"));
     }
 
-    @Ignore
+
     @Test
     public void testLongestPalindrome(){
         assertEquals("babbabbab", algorithmsService.longestPalindrome("babadbabbabbab"));

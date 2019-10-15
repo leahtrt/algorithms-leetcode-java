@@ -191,4 +191,13 @@ public interface AlgorithmsService {
 
     //116. https://leetcode.com/problems/populating-next-right-pointers-in-each-node/
     public Node connect(Node root);
+
+    //118. https://leetcode.com/problems/pascals-triangle/
+    public List<List<Integer>> generate(int numRows);
+
+    //121. https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
+    public int maxProfit(int[] prices);
+
+    //122. https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/
+    public int maxProfitTwo(int[] prices);
 }

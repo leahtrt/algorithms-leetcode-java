@@ -1645,9 +1645,67 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         return root;
     }
 
+    @Override
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> ans = new ArrayList<>();
+        for(int i = 0; i < numRows; i++){
+            ans.add(new ArrayList<>());
+        }
+        if(numRows >= 1){
+            ans.get(0).add(1);
+        }
+        if(numRows >= 2){
+            ans.get(1).add(1);
+            ans.get(1).add(1);
+        }
+        if(numRows >= 3){
+            for(int i = 2; i < numRows; i++){
+                ans.get(i).add(1);
+                for(int j = 0; j < ans.get(i-1).size() - 1; j++){
+                    ans.get(i).add(ans.get(i-1).get(j) + ans.get(i-1).get(j+1));
+                }
+                ans.get(i).add(1);
+            }
+        }
+        return ans;
+    }
 
+    @Override
+    public int maxProfit(int[] prices) {
+        /*//brute force
+        int max = 0;
+        for(int i = 0; i < prices.length - 1; i++){
+            for(int j = i + 1; j < prices.length; j++){
+                if(prices[j] - prices[i] > max){
+                    max = prices[j] - prices[i];
+                }
+            }
+        }
+        return max;*/
+        //one pass
+        int minPrice = Integer.MAX_VALUE;
+        int max = 0;
+        for(int i = 0; i < prices.length; i++){
+            if(prices[i] < minPrice){
+                minPrice = prices[i];
+            }else if(prices[i] - minPrice > max){
+                max = prices[i] - minPrice;
+            }
+        }
+        return max;
 
+    }
 
+    @Override
+    public int maxProfitTwo(int[] prices) {
+        int profit = 0;
+        for(int i = 1; i < prices.length; i++){
+            if(prices[i] > prices[i-1]){
+                profit = profit + prices[i] - prices[i-1];
+            }
+        }
+        return profit;
+    }
 
 
 
