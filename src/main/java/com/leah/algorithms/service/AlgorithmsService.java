@@ -200,4 +200,10 @@ public interface AlgorithmsService {
 
     //122. https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/
     public int maxProfitTwo(int[] prices);
+
+    //127. https://leetcode.com/problems/word-ladder/
+    public int ladderLength(String beginWord, String endWord, List<String> wordList);
+
+    //128. https://leetcode.com/problems/longest-consecutive-sequence/
+    public int longestConsecutive(int[] nums);
 }

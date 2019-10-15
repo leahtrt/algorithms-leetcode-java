@@ -4,6 +4,7 @@ import com.leah.algorithms.datastructure.ListNode;
 import com.leah.algorithms.datastructure.Node;
 import com.leah.algorithms.datastructure.TreeNode;
 import com.leah.algorithms.service.AlgorithmsService;
+import javafx.util.Pair;
 import org.springframework.stereotype.Component;
 import sun.nio.cs.ext.MacArabic;
 
@@ -1706,6 +1707,79 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         }
         return profit;
     }
+
+
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        HashMap<String, List<String>> map = new HashMap<>();
+        int len = beginWord.length();
+        for(int i = 0; i < wordList.size(); i++){
+            for(int j = 0; j < len; j++){
+                String word = wordList.get(i);
+                String key = word.substring(0, j) + "*" + word.substring(j+1);
+                if(map.containsKey(key)){
+                    List<String> value = map.get(key);
+                    value.add(word);
+                    map.put(key, value);
+                }else{
+                    List<String> value = new ArrayList<>();
+                    value.add(word);
+                    map.put(key, value);
+                }
+            }
+        }
+
+        //Queue for BFS
+        Queue<Pair<String, Integer>> q = new LinkedList<>();
+        q.add(new Pair(beginWord, 1));
+        HashMap<String, Boolean> visited = new HashMap<>();
+        visited.put(beginWord, true);
+
+        while(!q.isEmpty()){
+            Pair<String, Integer> p = q.poll();
+            String key = p.getKey();
+            int level = p.getValue();
+
+            for(int i = 0; i < len; i++){
+                String transformed = key.substring(0, i) + "*" + key.substring(i+1);
+                List<String> dicList = map.getOrDefault(transformed, new ArrayList<>());
+                for(int j = 0; j < dicList.size(); j++){
+                    //get to the endWord
+                    if(dicList.get(j).equals(endWord)){
+                        return level + 1;
+                    }
+                    //add to queue and marked as visited
+                    if(!visited.containsKey(dicList.get(j))){
+                        visited.put(dicList.get(j), true);
+                        q.add(new Pair(dicList.get(j), level + 1));
+                    }
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    @Override
+    public int longestConsecutive(int[] nums) {
+        if(nums == null || nums.length == 0) return 0;
+        Arrays.sort(nums);
+        int longest = 1;
+        int current = 1;
+        for(int i = 1; i < nums.length; i++){
+            if(nums[i] != nums[i-1]){
+                if(nums[i] - nums[i-1] == 1){
+                    current = current + 1;
+                }else{
+                    longest = Math.max(longest, current);
+                    current = 1;
+                }
+            }
+
+        }
+        return Math.max(longest, current);
+    }
+
+
 
 
 
