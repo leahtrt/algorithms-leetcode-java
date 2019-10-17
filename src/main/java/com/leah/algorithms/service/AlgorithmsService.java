@@ -206,4 +206,19 @@ public interface AlgorithmsService {
 
     //128. https://leetcode.com/problems/longest-consecutive-sequence/
     public int longestConsecutive(int[] nums);
+
+    //200. https://leetcode.com/problems/number-of-islands/
+    public int numIslands(char[][] grid);
+
+    //130. https://leetcode.com/problems/surrounded-regions/
+    public void solve(char[][] board);
+
+    //131. https://leetcode.com/problems/palindrome-partitioning/
+    public List<List<String>> partition(String s);
+
+    //136. https://leetcode.com/problems/single-number/
+    public int singleNumber(int[] nums);
+
+    //https://leetcode.com/problems/gas-station/
+    public int canCompleteCircuit(int[] gas, int[] cost);
 }

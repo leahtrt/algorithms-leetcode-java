@@ -1779,6 +1779,191 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         return Math.max(longest, current);
     }
 
+    @Override
+    public int numIslands(char[][] grid) {
+        //DFS
+        if(grid == null || grid.length == 0 || grid[0].length == 0){
+            return 0;
+        }
+        int m = grid.length, n = grid[0].length;
+        boolean[][] visited = new boolean[m][n];
+        int res = 0;
+
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(grid[i][j] == '0' || visited[i][j]){
+                    continue;
+                }else{
+                    helperIsland(grid, i, j, visited);
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+
+    public void helperIsland(char[][] grid, int i, int j, boolean[][] visited){
+        int m = grid.length, n = grid[0].length;
+        if(i < 0 || j < 0 || i > m - 1 || j > n - 1 || visited[i][j] || grid[i][j] == '0'){
+            return;
+        }
+        visited[i][j] = true;
+        helperIsland(grid, i + 1, j, visited);
+        helperIsland(grid, i - 1, j, visited);
+        helperIsland(grid, i, j - 1, visited);
+        helperIsland(grid, i, j + 1, visited);
+    }
+
+    @Override
+    public void solve(char[][] board) {
+        if(board == null || board.length == 0 || board[0].length == 0){
+            return;
+        }
+        int m = board.length, n = board[0].length;
+        boolean[][] visited = new boolean[m][n];
+        for(int i = 0; i < m; i++){
+            if(board[i][0] != 'X' && !visited[i][0]){
+                helperRegion(board, i, 0, visited);
+            }
+
+            if(board[i][n-1] != 'X' && !visited[i][n-1]){
+                helperRegion(board, i, n-1, visited);
+            }
+        }
+
+        for(int j = 0; j < n; j++){
+            if(board[0][j] != 'X' && !visited[0][j]){
+                helperRegion(board, 0, j, visited);
+            }
+
+            if(board[m-1][j] != 'X' && !visited[m-1][j]){
+                helperRegion(board, m-1, j, visited);
+            }
+        }
+
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(board[i][j] == 'O'){
+                    board[i][j] = 'X';
+                }
+            }
+        }
+
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(board[i][j] == '$'){
+                    board[i][j] = 'O';
+                }
+            }
+        }
+    }
+
+    public void helperRegion(char[][] board, int i, int j, boolean[][] visited){
+        int m = board.length, n = board[0].length;
+        if(i < 0 || j < 0 || i > m - 1 || j > n - 1 || visited[i][j] || board[i][j] == 'X'){
+            return;
+        }
+        board[i][j] = '$';
+        visited[i][j] = true;
+        helperRegion(board, i - 1, j, visited);
+        helperRegion(board, i + 1, j, visited);
+        helperRegion(board, i, j - 1, visited);
+        helperRegion(board, i, j + 1, visited);
+    }
+
+    @Override
+    public List<List<String>> partition(String s) {
+        List<List<String>> ans = new ArrayList<>();
+        if(s.isEmpty()){
+            return ans;
+        }
+        List<String> item = new ArrayList<>();
+        helper(s, 0, ans, item);
+
+        return ans;
+    }
+
+    public void helper(String s, int start, List<List<String>> ans, List<String> item){
+        if(start == s.length()){
+            ans.add(new ArrayList(item));
+            return;
+        }
+        for(int i = start; i < s.length(); i++){
+            if(!isPal(s.substring(start, i+1))){
+                continue;
+            }else{
+                item.add(s.substring(start, i+1));
+                helper(s, i+1, ans, item);
+                item.remove(item.size() - 1);
+            }
+        }
+    }
+
+    public boolean isPal(String s){
+        int left = 0, right = s.length() - 1;
+        while(left < right){
+            if(s.charAt(left) != s.charAt(right)){
+                return false;
+            }else{
+                left++;
+                right--;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int singleNumber(int[] nums) {
+        if(nums == null || nums.length == 0) return 0;
+
+       /* //Sort
+        Arrays.sort(nums);
+        for(int i = 0; i < nums.length - 1; i++){
+            if(nums[i] == nums[i+1]){
+                i++;
+            }else{
+                return nums[i];
+            }
+        }
+        return nums[nums.length - 1];*/
+
+       /*//HashMap
+        HashMap<Integer, Integer> count = new HashMap<>();
+        for(int i = 0; i < nums.length; i++){
+            count.put(nums[i], count.getOrDefault(nums[i], 0) + 1);
+        }
+        for(int i = 0; i < nums.length; i++){
+            if(count.get(nums[i]) == 1){
+                return nums[i];
+            }
+        }
+        return 0;*/
+
+       //Bit manipulation
+        int a = 0;
+        for(int i = 0; i < nums.length; i++){
+            a = a ^ nums[i];
+        }
+        return a;
+    }
+
+    @Override
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int start = 0;
+        int len = gas.length;
+        int currentGas = 0;
+        int total = 0;
+        for(int i = 0; i < len; i++){
+            total = total + gas[i] - cost[i];
+            currentGas = currentGas + gas[i] - cost[i];
+            if(currentGas < 0){
+                start = i + 1;
+                currentGas = 0;
+            }
+        }
+        if(total < 0) return -1;
+        return start;
+    }
 
 
 
