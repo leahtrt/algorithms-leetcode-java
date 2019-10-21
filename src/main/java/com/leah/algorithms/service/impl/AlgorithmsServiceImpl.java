@@ -1965,7 +1965,57 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         return start;
     }
 
+    @Override
+    public boolean wordBreak(String s, List<String> wordDict) {
+        int len = s.length();
+        //dp[i]表示前i个字符能否被分割
+        boolean[] dp = new boolean[len + 1];
+        dp[0] = true;
+        for(int i = 1; i <= len; i++){
+            for(int j = 0; j < i; j++){
+                String temp = s.substring(j, i);
+                //[0,i) => [0,j) + [j,i)
+                if(dp[j] && wordDict.contains(temp)){
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
 
+        return dp[len];
+    }
 
+    public boolean hasCycle(ListNode head) {
+        //Hash Table
+        if(head == null || head.next == null){
+            return false;
+        }
+        HashSet<ListNode> set = new HashSet<>();
+        ListNode cur = head;
+        while(cur != null){
+            if(set.contains(cur)){
+                return true;
+            }else{
+                set.add(cur);
+                cur = cur.next;
+            }
+        }
+        return false;
+
+        /*//Two pointers
+        if(head == null || head.next == null){
+            return false;
+        }
+        ListNode slow = head;
+        ListNode fast = head.next;
+        while(slow != fast){
+            if(fast == null || slow == null || fast.next == null){
+                return false;
+            }
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return true;*/
+    }
 
 }

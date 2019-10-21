@@ -219,6 +219,12 @@ public interface AlgorithmsService {
     //136. https://leetcode.com/problems/single-number/
     public int singleNumber(int[] nums);
 
-    //https://leetcode.com/problems/gas-station/
+    //134. https://leetcode.com/problems/gas-station/
     public int canCompleteCircuit(int[] gas, int[] cost);
+
+    //139. https://leetcode.com/problems/word-break/
+    public boolean wordBreak(String s, List<String> wordDict);
+
+    //141. https://leetcode.com/problems/linked-list-cycle/
+    public boolean hasCycle(ListNode head);
 }
