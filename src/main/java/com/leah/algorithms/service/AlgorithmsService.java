@@ -230,4 +230,7 @@ public interface AlgorithmsService {
 
     //148. https://leetcode.com/problems/sort-list/
     public ListNode sortList(ListNode head);
+
+    //149. https://leetcode.com/problems/max-points-on-a-line/
+    public int maxPoints(int[][] points);
 }

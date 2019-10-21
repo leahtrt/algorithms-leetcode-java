@@ -2020,7 +2020,7 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
 
     @Override
     public ListNode sortList(ListNode head) {
-        List<Integer> list = new ArrayList<>();
+/*        List<Integer> list = new ArrayList<>();
         while(head != null){
             list.add(head.val);
             head = head.next;
@@ -2033,7 +2033,49 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
             cur = cur.next;
         }
         cur.next = null;
-        return dummy.next;
+        return dummy.next;*/
+
+        if(head == null || head.next == null) return head;
+        ListNode slow = head;
+        ListNode fast = head;
+        ListNode pre = head;
+        while(fast != null && fast.next != null){
+            pre = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        pre.next = null;
+        return mergeTwoLists(sortList(head), sortList(slow));
     }
 
+    @Override
+    public int maxPoints(int[][] points) {
+        if(points == null || points.length == 0 || points[0].length == 0) return 0;
+        int ans = 0;
+        for(int i = 0; i < points.length; i++){
+            HashMap<Double,Integer> map = new HashMap<>();
+            int duplicate = 1;
+            for(int j = i+1; j < points.length; j++){
+                int dx = points[i][0] - points[j][0];
+                int dy = points[i][1] - points[j][1];
+                if(dx == 0 && dy == 0){
+                    duplicate++;
+                }else if(dy == 0){
+                    map.put((double)Integer.MAX_VALUE, map.getOrDefault((double)Integer.MAX_VALUE, 0) + 1);
+                }else{
+                    double k = (double)dx / dy;
+                    if(k == -0.0) k = 0.0;
+                    map.put(k, map.getOrDefault(k, 0) + 1);
+                }
+            }
+            ans = Math.max(ans, duplicate);
+            for (Map.Entry mapElement : map.entrySet()) {
+                int value = (int)mapElement.getValue() + duplicate;
+                if(value > ans){
+                    ans = value;
+                }
+            }
+        }
+        return ans;
+    }
 }

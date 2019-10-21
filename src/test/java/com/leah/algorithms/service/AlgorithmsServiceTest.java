@@ -253,6 +253,13 @@ public class AlgorithmsServiceTest {
 
 
 
+    @Test
+    public void testMaxPoints(){
+        int[][] points = new int[][]{
+                {4,0},{4,-1},{4,5}
+        };
+        assertEquals(4, algorithmsService.maxPoints(points));
+    }
 
 
 
