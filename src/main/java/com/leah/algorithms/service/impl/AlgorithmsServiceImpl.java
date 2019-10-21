@@ -2018,4 +2018,22 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         return true;*/
     }
 
+    @Override
+    public ListNode sortList(ListNode head) {
+        List<Integer> list = new ArrayList<>();
+        while(head != null){
+            list.add(head.val);
+            head = head.next;
+        }
+        Collections.sort(list);
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+        for(int i = 0; i < list.size(); i++){
+            cur.next = new ListNode(list.get(i));
+            cur = cur.next;
+        }
+        cur.next = null;
+        return dummy.next;
+    }
+
 }

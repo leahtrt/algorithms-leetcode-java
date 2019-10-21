@@ -227,4 +227,7 @@ public interface AlgorithmsService {
 
     //141. https://leetcode.com/problems/linked-list-cycle/
     public boolean hasCycle(ListNode head);
+
+    //148. https://leetcode.com/problems/sort-list/
+    public ListNode sortList(ListNode head);
 }
