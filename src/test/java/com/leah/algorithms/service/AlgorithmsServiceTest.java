@@ -252,14 +252,19 @@ public class AlgorithmsServiceTest {
     }
 
 
+    @Ignore
+    @Test
+    public void testEvalRPN(){
+        assertEquals(6, algorithmsService.evalRPN(new String[]{"4","13","5","/","+"}));
+    }
 
     @Test
-    public void testMaxPoints(){
-        int[][] points = new int[][]{
-                {4,0},{4,-1},{4,5}
-        };
-        assertEquals(4, algorithmsService.maxPoints(points));
+    public void testTrailingZeroes(){
+        assertEquals(7, algorithmsService.trailingZeroes(30));
     }
+
+
+
 
 
 

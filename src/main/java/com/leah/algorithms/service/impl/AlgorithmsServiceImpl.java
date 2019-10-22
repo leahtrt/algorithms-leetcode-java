@@ -2078,4 +2078,182 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         }
         return ans;
     }
+
+
+
+    public int evalRPN(String[] tokens) {
+        Stack<Integer> s = new Stack<>();
+        for(int i = 0; i < tokens.length; i++){
+            if(tokens[i].equals("+")){
+                int a = s.pop();
+                int b = s.pop();
+                int c = a + b;
+                s.push(c);
+            }else if(tokens[i].equals("-")){
+                int a = s.pop();
+                int b = s.pop();
+                int c = b - a;
+                s.push(c);
+
+            }else if(tokens[i].equals("*")){
+                int a = s.pop();
+                int b = s.pop();
+                int c = a * b;
+                s.push(c);
+            }else if(tokens[i].equals("/")){
+                int a = s.pop();
+                int b = s.pop();
+                int c = b / a;
+                s.push(c);
+            }else{
+                s.push(Integer.parseInt(tokens[i]));
+            }
+        }
+        return s.pop();
+    }
+
+    @Override
+    public int maxProduct(int[] nums) {
+       /* //brute force
+        if(nums == null || nums.length == 0) return 0;
+        int ans = Integer.MIN_VALUE;
+        for(int i = 0; i < nums.length; i++){
+            int product = 1;
+            for(int j = i; j < nums.length; j++){
+                product = product * nums[j];
+                ans = Math.max(ans, product);
+            }
+        }
+        return ans;*/
+        //two dp array
+        if(nums == null || nums.length == 0) return 0;
+        int ans = nums[0];
+        int[] dpMax = new int[nums.length];
+        int[] dpMin = new int[nums.length];
+        dpMax[0] = nums[0];
+        dpMin[0] = nums[0];
+        for(int i = 1; i < nums.length; i++){
+            dpMax[i] = Math.max(nums[i], Math.max(dpMax[i-1] * nums[i], dpMin[i-1] * nums[i]));
+            dpMin[i] = Math.min(nums[i], Math.min(dpMin[i-1] * nums[i], dpMax[i-1] * nums[i]));
+            ans = Math.max(ans, dpMax[i]);
+        }
+        return ans;
+    }
+
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        /*//brute force
+        if(headA == null || headB == null) return null;
+        ListNode curA = headA, curB = headB;
+        while(curA != null){
+            curB = headB;
+            while(curB != null){
+                if(curA == curB){
+                    return curA;
+                }else{
+                    curB = curB.next;
+                }
+            }
+            curA = curA.next;
+        }
+        return null;*/
+
+        //HashSet
+        if(headA == null || headB == null) return null;
+        Set<ListNode> set = new HashSet<>();
+        ListNode curA = headA;
+        while(curA != null){
+            set.add(curA);
+            curA = curA.next;
+        }
+        ListNode curB = headB;
+        while(curB != null){
+            if(set.contains(curB)){
+                return curB;
+            }else{
+                curB = curB.next;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public int findPeakElement(int[] nums) {
+        if(nums == null || nums.length == 0) return -1;
+        if(nums.length == 1) return 0;
+        if(nums.length == 2){
+            if(nums[0] > nums[1]){
+                return 0;
+            }else{
+                return 1;
+            }
+        }
+        for(int i = 0; i < nums.length; i++){
+            if(i == 0){
+                if(nums[i] > nums[i+1]){
+                    return i;
+                }
+            }else if(i < nums.length - 1){
+                if(nums[i] > nums[i-1] && nums[i] > nums[i+1]){
+                    return i;
+                }
+            }else{
+                if(nums[i] > nums[i-1]){
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public int majorityElement(int[] nums) {
+        //HashMap
+        if(nums == null || nums.length == 0) return 0;
+        int m = (int)Math.floor((double)(nums.length/2));
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int i = 0; i < nums.length; i++){
+            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+        }
+
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if(entry.getValue() > m){
+                return entry.getKey();
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public int titleToNumber(String s) {
+        int ans = 0;
+        int n = s.length() - 1;
+        for(int i = n; i >= 0; i--){
+            ans = ans + (s.charAt(i) - 'A' + 1) * (int)Math.pow(26, n-i);
+        }
+        return ans;
+    }
+
+    @Override
+    public int trailingZeroes(int n) {
+        int ans = 0;
+        while(n >= 1){
+            ans = ans + n / 5;
+            n = n / 5;
+        }
+        return ans;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

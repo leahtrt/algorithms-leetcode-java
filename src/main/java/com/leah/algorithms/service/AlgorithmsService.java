@@ -233,4 +233,27 @@ public interface AlgorithmsService {
 
     //149. https://leetcode.com/problems/max-points-on-a-line/
     public int maxPoints(int[][] points);
+
+    //150. https://leetcode.com/problems/evaluate-reverse-polish-notation/
+    public int evalRPN(String[] tokens);
+
+    //152. https://leetcode.com/problems/maximum-product-subarray/
+    public int maxProduct(int[] nums);
+
+    //155. https://leetcode.com/problems/min-stack/
+
+    //160. https://leetcode.com/problems/intersection-of-two-linked-lists/
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB);
+
+    //162.https://leetcode.com/problems/find-peak-element/
+    public int findPeakElement(int[] nums);
+
+    //169. https://leetcode.com/problems/majority-element/
+    public int majorityElement(int[] nums);
+
+    //171. https://leetcode.com/problems/excel-sheet-column-number/
+    public int titleToNumber(String s);
+
+    //172. https://leetcode.com/problems/factorial-trailing-zeroes/
+    public int trailingZeroes(int n);
 }
