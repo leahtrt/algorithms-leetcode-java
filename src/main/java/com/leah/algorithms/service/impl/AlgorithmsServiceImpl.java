@@ -2243,12 +2243,79 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         return ans;
     }
 
+    @Override
+    public void rotate(int[] nums, int k) {
+        /*k = k % nums.length;
+        int[] temp = new int[nums.length];
+        for(int i = 0; i < nums.length; i++){
+            temp[i] = nums[i];
+        }
+        for(int i = 0; i < nums.length; i++){
+            int index = i + k;
+            if(index < nums.length){
+                nums[index] = temp[i];
+            }else{
+                index = i + k - nums.length;
+                nums[index] = temp[i];
+            }
+        }*/
 
+        //reverse
+        k = k % nums.length;
+        reverse(nums, 0, nums.length - 1 - k);
+        reverse(nums, nums.length - k, nums.length - 1);
+        reverse(nums, 0, nums.length - 1);
+    }
 
+    public void reverse(int[] nums, int start, int end){
+        while(start <= end){
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
+            start++;
+            end--;
+        }
+    }
 
+    @Override
+    public int rob(int[] nums) {
+        if(nums == null || nums.length == 0){
+            return 0;
+        }
+        int[] dp = new int[nums.length];
+        for(int i = 0; i < nums.length; i++){
+            if(i == 0){
+                dp[i] = nums[i];
+            }else if(i == 1){
+                dp[i] = Math.max(nums[0], nums[1]);
+            }else{
+                dp[i] = Math.max(dp[i - 1], dp[i-2] + nums[i]);
+            }
+        }
+        return dp[nums.length - 1];
+    }
 
-
-
+    @Override
+    public boolean isHappy(int n) {
+        if(n == 1) return true;
+        HashSet<Integer> set = new HashSet<>();
+        while(n != 1){
+            if(set.contains(n)){
+                return false;
+            }else{
+                set.add(n);
+                int sum = 0;
+                int temp = n;
+                while(temp > 9){
+                    sum = sum + (temp%10) * (temp%10);
+                    temp = temp / 10;
+                }
+                sum = sum + temp * temp;
+                n = sum;
+            }
+        }
+        return true;
+    }
 
 
 

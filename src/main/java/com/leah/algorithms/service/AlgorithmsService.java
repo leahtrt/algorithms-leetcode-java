@@ -256,4 +256,13 @@ public interface AlgorithmsService {
 
     //172. https://leetcode.com/problems/factorial-trailing-zeroes/
     public int trailingZeroes(int n);
+
+    //189. https://leetcode.com/problems/rotate-array/
+    public void rotate(int[] nums, int k);
+
+    //198. https://leetcode.com/problems/house-robber/
+    public int rob(int[] nums);
+
+    //202. https://leetcode.com/problems/happy-number/
+    public boolean isHappy(int n);
 }
