@@ -2317,10 +2317,171 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         return true;
     }
 
+    public boolean isPrime(int n){
+        if(n == 0) return false;
+        if(n == 1) return false;
+        if(n == 2) return true;
+        //we only need to consider factors up to √n because, if n is divisible by some number p, then n = p × q and since p ≤ q, we could derive that p ≤ √n.
+        for(int i = 2; i * i <= n; i++){
+            if(n % i == 0){
+                return false;
+            }
+        }
+        return true;
+    }
+    @Override
+    public int countPrimes(int n) {
+        /*int count = 0;
+        for(int i = n-1; i >= 0; i--){
+            if(isPrime(i)){
+                count++;
+            }
+        }
+        return count;*/
 
+        //Sieve of Eratosthenes
+        boolean[] notPrime = new boolean[n];
+        int count = 0;
+        for(int i = 2; i < n; i++){
+            if(notPrime[i] == false){
+                count++;
+            }
+            for(int j = 2; i * j < n; j++){
+                notPrime[i * j] = true;
+            }
+        }
+        return count;
+    }
 
+    @Override
+    public ListNode reverseList(ListNode head) {
+  /*      if(head == null) return head;
+        List<Integer> list = new ArrayList<>();
+        ListNode cur = head;
+        while(cur != null){
+            list.add(cur.val);
+            cur = cur.next;
+        }
+        ListNode dummy = new ListNode(0);
+        ListNode curDummy = dummy;
+        for(int i = list.size() - 1; i >= 0; i--){
+            curDummy.next = new ListNode(list.get(i));
+            curDummy = curDummy.next;
+        }
+        curDummy.next = null;
+        return dummy.next;*/
 
+       /* //iterative
+        ListNode pre = null;
+        ListNode cur = head;
+        while(cur != null){
+            ListNode next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        return pre;*/
 
+       //recursive
+        if(head == null || head.next == null) return head;
+        ListNode n = reverseList(head.next);
+        head.next.next = head;
+        head.next = null;
+        return n;
+    }
+
+    @Override
+    public boolean containsDuplicate(int[] nums) {
+        if(nums == null) return false;
+        HashSet<Integer> set = new HashSet<>();
+        for(int i = 0; i < nums.length; i++){
+            if(set.contains(nums[i])){
+                return true;
+            }else{
+                set.add(nums[i]);
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int calculate(String s) {
+        Stack<Integer> stack = new Stack<>();
+        int len = s.length();
+        int num = 0, ans = 0;
+        char op = '+';
+        for(int i = 0; i < len; i++){
+            char c = s.charAt(i);
+            if(Character.isDigit(c)){
+                num = num * 10 + c - '0';
+            }
+
+            if((!Character.isDigit(c) && c != ' ') || i == len - 1){
+                if(op == '+'){
+                    stack.push(num);
+                }else if(op == '-'){
+                    stack.push(-num);
+                }else if(op == '*'){
+                    int temp = stack.pop() * num;
+                    stack.push(temp);
+                }else if(op == '/'){
+                    int temp = stack.pop() / num;
+                    stack.push(temp);
+                }
+                num = 0;
+                op = c;
+            }
+        }
+
+        while(!stack.isEmpty()){
+            ans = ans + stack.peek();
+            stack.pop();
+        }
+
+        return ans;
+    }
+
+    @Override
+    public int kthSmallest(TreeNode root, int k) {
+        if(root == null) return 0;
+        List<Integer> list = new ArrayList<>();
+        //inorder
+        formList(list, root);
+        return list.get(k-1);
+    }
+
+    //inOrder
+    public void formList(List<Integer> list, TreeNode t){
+        if(t == null) return;
+        if(t.left != null){
+            formList(list, t.left);
+        }
+        list.add(t.val);
+        if(t.right != null){
+            formList(list, t.right);
+        }
+
+    }
+
+    public boolean isPalindrome(ListNode head) {
+        if(head == null || head.next == null) return true;
+        List<Integer> list = new ArrayList<>();
+        ListNode cur = head;
+        while(cur != null){
+            list.add(cur.val);
+            cur = cur.next;
+        }
+        int left = 0, right = list.size() - 1;
+        while(left <= right){
+            if(list.get(left).equals(list.get(right))){
+                left++;
+                right--;
+            }else{
+                return false;
+            }
+        }
+        return true;
+    }
 
 
 }

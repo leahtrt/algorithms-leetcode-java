@@ -258,11 +258,25 @@ public class AlgorithmsServiceTest {
         assertEquals(6, algorithmsService.evalRPN(new String[]{"4","13","5","/","+"}));
     }
 
+    @Ignore
     @Test
     public void testTrailingZeroes(){
         assertEquals(7, algorithmsService.trailingZeroes(30));
     }
 
+    @Ignore
+    @Test
+    public void testIsPrime(){
+        assertEquals(false, algorithmsService.isPrime(87));
+        assertEquals(true, algorithmsService.isPrime(73));
+    }
+
+    @Test
+    public void testIsPalidrome(){
+        ListNode head = new ListNode(-129);
+        head.next = new ListNode(-129);
+        assertEquals(true, algorithmsService.isPalindrome(head));
+    }
 
 
 

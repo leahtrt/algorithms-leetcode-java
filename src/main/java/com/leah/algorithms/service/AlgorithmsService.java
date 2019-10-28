@@ -265,4 +265,23 @@ public interface AlgorithmsService {
 
     //202. https://leetcode.com/problems/happy-number/
     public boolean isHappy(int n);
+
+    //204. https://leetcode.com/problems/count-primes/
+    public boolean isPrime(int n);
+    public int countPrimes(int n);
+
+    //206. https://leetcode.com/problems/reverse-linked-list/
+    public ListNode reverseList(ListNode head);
+
+    //217. https://leetcode.com/problems/contains-duplicate/
+    public boolean containsDuplicate(int[] nums);
+
+    //227. https://leetcode.com/problems/basic-calculator-ii/
+    public int calculate(String s);
+
+    //230. https://leetcode.com/problems/kth-smallest-element-in-a-bst/
+    public int kthSmallest(TreeNode root, int k);
+
+    //234. https://leetcode.com/problems/palindrome-linked-list/
+    public boolean isPalindrome(ListNode head);
 }
