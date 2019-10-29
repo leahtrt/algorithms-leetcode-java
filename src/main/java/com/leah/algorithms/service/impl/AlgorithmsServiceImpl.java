@@ -2483,5 +2483,122 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         return true;
     }
 
+    @Override
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        /*//recursive
+        if(root == null) return null;
+        if(root.val > p.val && root.val > q.val){
+            return lowestCommonAncestor(root.left, p, q);
+        }else if(root.val < p.val && root.val < q.val){
+            return lowestCommonAncestor(root.right, p, q);
+        }else{
+            return root;
+        }*/
+
+        //iterative
+        TreeNode t = root;
+        while(t != null){
+            if(t.val > p.val && t.val > q.val){
+                t = t.left;
+            }else if(t.val < p.val && t.val < q.val){
+                t = t.right;
+            }else{
+                return t;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public TreeNode lowestCommonAncestorTwo(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null) return null;
+        if(root.val == p.val || root.val == q.val){
+            return root;
+        }
+        TreeNode left = lowestCommonAncestorTwo(root.left, p, q);
+        TreeNode right = lowestCommonAncestorTwo(root.right, p, q);
+        if(left != null && right != null){
+            return root;
+        }
+        return left == null ? right : left;
+    }
+
+    @Override
+    public void deleteNode(ListNode node) {
+        node.val = node.next.val;
+        node.next = node.next.next;
+    }
+
+    @Override
+    public ListNode removeElements(ListNode head, int val) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode cur = dummy;
+        while(cur != null){
+            ListNode next = cur.next;
+            while(next != null && next.val == val){
+                next = next.next;
+            }
+            cur.next = next;
+            cur = next;
+        }
+        return dummy.next;
+    }
+
+    @Override
+    public int[] productExceptSelf(int[] nums) {
+        /*int len = nums.length;
+        int[] ans = new int[len];
+        int[] left = new int[len+1];
+        int[] right = new int[len+1];
+        left[0] = 1;
+        right[0] = 1;
+        for(int i = 1; i < len + 1; i++){
+            left[i] = left[i-1] * nums[i-1];
+            right[i] = right[i-1] * nums[len - i];
+        }
+
+        for(int i = 0; i < len; i++){
+            ans[i] = left[i] * right[len - i - 1];
+        }
+        return ans;*/
+
+        //O(1) space
+        int len = nums.length;
+        int[] ans = new int[len];
+        ans[0] = 1;
+        for(int i = 1; i < len; i++){
+            ans[i] = ans[i-1] * nums[i-1];
+        }
+        int right = 1;
+        for(int i = len - 1; i >= 0; i--){
+            ans[i] = ans[i] * right;
+            right = right * nums[i];
+        }
+        return ans;
+    }
+
+    @Override
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        if(nums == null || nums.length == 0) return nums;
+        List<Integer> list = new ArrayList<>();
+        for(int i = 0; i <= nums.length - k; i++){
+            int max = Integer.MIN_VALUE;
+            int count = 0;
+            for(int j = i; count < k; count++){
+                if(nums[j] > max){
+                    max = nums[j];
+                }
+                j++;
+            }
+            list.add(max);
+        }
+
+        int[] ans = new int[list.size()];
+        for(int i = 0; i < list.size(); i++){
+            ans[i] = list.get(i);
+        }
+        return ans;
+    }
 
 }

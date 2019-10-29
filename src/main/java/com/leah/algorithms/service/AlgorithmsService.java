@@ -284,4 +284,22 @@ public interface AlgorithmsService {
 
     //234. https://leetcode.com/problems/palindrome-linked-list/
     public boolean isPalindrome(ListNode head);
+
+    //235. https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q);
+
+    //236. https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/
+    public TreeNode lowestCommonAncestorTwo(TreeNode root, TreeNode p, TreeNode q);
+
+    //237.https://leetcode.com/problems/delete-node-in-a-linked-list/
+    public void deleteNode(ListNode node);
+
+    //203. https://leetcode.com/problems/remove-linked-list-elements/
+    public ListNode removeElements(ListNode head, int val);
+
+    //238. https://leetcode.com/problems/product-of-array-except-self/
+    public int[] productExceptSelf(int[] nums);
+
+    //239. https://leetcode.com/problems/sliding-window-maximum/
+    public int[] maxSlidingWindow(int[] nums, int k);
 }
