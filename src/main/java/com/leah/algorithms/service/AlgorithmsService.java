@@ -302,4 +302,13 @@ public interface AlgorithmsService {
 
     //239. https://leetcode.com/problems/sliding-window-maximum/
     public int[] maxSlidingWindow(int[] nums, int k);
+
+    //240. https://leetcode.com/problems/search-a-2d-matrix-ii/
+    public boolean searchMatrix(int[][] matrix, int target);
+
+    //242. https://leetcode.com/problems/valid-anagram/
+    public boolean isAnagram(String s, String t);
+
+    //268. https://leetcode.com/problems/missing-number/
+    public int missingNumber(int[] nums);
 }

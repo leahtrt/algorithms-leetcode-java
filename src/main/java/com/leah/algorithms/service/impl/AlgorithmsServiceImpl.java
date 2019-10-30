@@ -2601,4 +2601,99 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         return ans;
     }
 
+    @Override
+    public boolean searchMatrix(int[][] matrix, int target) {
+/*        if(matrix == null || matrix.length == 0 || matrix[0].length == 0){
+            return false;
+        }
+        int m = matrix.length, n = matrix[0].length;
+        for(int i = 0; i < m; i++){
+            int left = 0, right = n - 1;
+            while(left <= right){
+                int mid = left + (right - left) / 2;
+                if(target == matrix[i][mid]){
+                    return true;
+                }else if(target > matrix[i][mid]){
+                    left = mid + 1;
+                }else{
+                    right = mid - 1;
+                }
+            }
+        }
+
+        return false;*/
+
+        if(matrix == null || matrix.length == 0 || matrix[0].length == 0){
+            return false;
+        }
+        int m = matrix.length, n = matrix[0].length;
+        int x = 0, y = n - 1;
+        while(x < m && y >= 0){
+            if(matrix[x][y] > target){
+                y--;
+            }else if(matrix[x][y] < target){
+                x++;
+            }else if(matrix[x][y] == target){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean isAnagram(String s, String t) {
+/*        if(t.length() != s.length()) return false;
+        HashMap<Character, Integer> map = new HashMap<>();
+        for(int i = 0; i < s.length(); i++){
+            map.put(s.charAt(i), map.getOrDefault(s.charAt(i), 0) + 1);
+        }
+
+        for(int i = 0; i < t.length(); i++){
+            char c = t.charAt(i);
+            if(map.containsKey(c)){
+                map.put(c, map.get(c) - 1);
+                if(map.get(c) < 0){
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }
+        return true;*/
+
+       /* //Sort
+        if(t.length() != s.length()) return false;
+        char[] ch1 = s.toCharArray();
+        char[] ch2 = t.toCharArray();
+        Arrays.sort(ch1);
+        Arrays.sort(ch2);
+        return Arrays.equals(ch1, ch2);*/
+
+        //HashMap
+        if(t.length() != s.length()) return false;
+        int[] map = new int[26];
+        for(int i = 0; i < s.length(); i++){
+            map[s.charAt(i) - 'a']++;
+            map[t.charAt(i) - 'a']--;
+        }
+        for(int i = 0; i < 26; i++){
+            if(map[i] != 0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int missingNumber(int[] nums) {
+        int ans = 0;
+        for(int i = 0; i <= nums.length; i++){
+            ans = ans + i;
+        }
+        for(int i = 0; i < nums.length; i++){
+            ans = ans - nums[i];
+        }
+        return ans;
+    }
+
 }
