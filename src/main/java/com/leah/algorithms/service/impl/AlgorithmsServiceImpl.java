@@ -2696,4 +2696,94 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         return ans;
     }
 
+    @Override
+    public void moveZeroes(int[] nums) {
+/*        int index = 0;
+        int len = nums.length;
+        while(index < len){
+            if(nums[index] != 0){
+                index++;
+            }else{
+                break;
+            }
+        }
+
+        while(index < len - 1){
+            for(int i = index + 1; i < len; i++){
+                if(nums[i] != 0){
+                    nums[index] = nums[i];
+                    nums[i] = 0;
+                    break;
+                }
+            }
+            index++;
+        }*/
+
+        for(int i = 0, j = 0; i < nums.length; i++){
+            if(nums[i] != 0){
+                int temp = nums[j];
+                nums[j] = nums[i];
+                nums[i] = temp;
+                j++;
+            }
+        }
+
+    }
+
+    @Override
+    public int findDuplicate(int[] nums) {
+        //HashSet
+        HashSet<Integer> set = new HashSet<>();
+        for(int i = 0; i < nums.length; i++){
+            if(set.contains(nums[i])){
+                return nums[i];
+            }else{
+                set.add(nums[i]);
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public void gameOfLife(int[][] board) {
+        int m = board.length, n = board[0].length;
+        int[][] temp = new int[m][n];
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                int c = count(board, i+1, j) + count(board, i-1, j) + count(board, i, j+1) + count(board, i, j-1)
+                        + count(board, i-1, j-1) + count(board,i-1,j+1) + count(board,i+1,j+1) + count(board,i+1,j-1);
+                if(board[i][j] == 0){
+                    if(c == 3){
+                        temp[i][j] = 1;
+                    }else{
+                        temp[i][j] = 0;
+                    }
+                }else if(board[i][j] == 1){
+                    if(c >= 2 && c <= 3){
+                        temp[i][j] = 1;
+                    }else{
+                        temp[i][j] = 0;
+                    }
+                }
+            }
+        }
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                board[i][j] = temp[i][j];
+            }
+        }
+
+    }
+
+    public int count(int[][] board, int i, int j){
+        int m = board.length, n = board[0].length;
+        if(i < 0 || j < 0 || i >= m || j >= n){
+            return 0;
+        }
+        if(board[i][j] == 1){
+            return 1;
+        }
+        return 0;
+    }
+
 }

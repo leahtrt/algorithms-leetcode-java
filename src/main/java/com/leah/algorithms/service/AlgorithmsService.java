@@ -311,4 +311,15 @@ public interface AlgorithmsService {
 
     //268. https://leetcode.com/problems/missing-number/
     public int missingNumber(int[] nums);
+
+    //283. https://leetcode.com/problems/move-zeroes/
+    public void moveZeroes(int[] nums);
+
+    //287. https://leetcode.com/problems/find-the-duplicate-number/
+    public int findDuplicate(int[] nums);
+
+    //289. https://leetcode.com/problems/game-of-life/
+    public void gameOfLife(int[][] board);
+
+    //295. https://leetcode.com/problems/find-median-from-data-stream/
 }
