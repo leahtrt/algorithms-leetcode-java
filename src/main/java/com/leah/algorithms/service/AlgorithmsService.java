@@ -322,4 +322,16 @@ public interface AlgorithmsService {
     public void gameOfLife(int[][] board);
 
     //295. https://leetcode.com/problems/find-median-from-data-stream/
+
+    //315. https://leetcode.com/problems/count-of-smaller-numbers-after-self/
+    public List<Integer> countSmaller(int[] nums);
+
+    //324. https://leetcode.com/problems/wiggle-sort-ii/
+    public void wiggleSort(int[] nums);
+
+    //326. https://leetcode.com/problems/power-of-three/
+    public boolean isPowerOfThree(int n);
+
+    //328. https://leetcode.com/problems/odd-even-linked-list/
+    public ListNode oddEvenList(ListNode head);
 }

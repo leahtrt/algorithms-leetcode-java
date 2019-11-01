@@ -2786,4 +2786,92 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         return 0;
     }
 
+    @Override
+    public List<Integer> countSmaller(int[] nums) {
+        //brute force
+        List<Integer> counts = new ArrayList<>();
+        if(nums == null || nums.length == 0){
+            return counts;
+        }
+        for(int i = 0; i < nums.length; i++){
+            int count = 0;
+            for(int j = i + 1; j < nums.length; j++){
+                if(nums[j] < nums[i]){
+                    count++;
+                }
+            }
+            counts.add(count);
+        }
+        return counts;
+    }
+
+    @Override
+    public void wiggleSort(int[] nums) {
+        int[] copy = new int[nums.length];
+        for(int i = 0; i < nums.length; i++){
+            copy[i] = nums[i];
+        }
+        Arrays.sort(copy);
+        int mid = nums.length % 2 == 0 ? nums.length / 2 - 1 : nums.length / 2;
+        for(int i = 0, j = mid; i < nums.length; i++){
+            nums[i] = copy[j];
+            if(i + 1 < nums.length){
+                nums[i + 1] = copy[j + nums.length/2];
+            }
+            j--;
+            i++;
+        }
+    }
+
+    @Override
+    public boolean isPowerOfThree(int n) {
+        while(n > 3){
+            if(n % 3 != 0) return false;
+            n = n / 3;
+        }
+        if(n == 3) return true;
+        if(n == 1) return true;
+        return false;
+
+    }
+
+    @Override
+    public ListNode oddEvenList(ListNode head) {
+/*        if(head == null) return head;
+        ListNode dummy = new ListNode(0);
+        ListNode dummyCopy = dummy;
+        ListNode cur = head;
+        while(cur != null){
+            dummyCopy.next = new ListNode(cur.val);
+            dummyCopy = dummyCopy.next;
+            if(cur.next != null){
+                cur = cur.next.next;
+            }else{
+                break;
+            }
+        }
+        cur = head.next;
+        while(cur != null){
+            dummyCopy.next = new ListNode(cur.val);
+            dummyCopy = dummyCopy.next;
+            if(cur.next != null){
+                cur = cur.next.next;
+            }else{
+                break;
+            }
+        }
+        return dummy.next;*/
+
+        if(head == null) return head;
+        ListNode odd = head, even = head.next, evenHead = head.next;
+        while(even != null && even.next != null){
+            odd.next = even.next;
+            odd = odd.next;
+            even.next = odd.next;
+            even = even.next;
+        }
+        odd.next = evenHead;
+        return head;
+    }
+
 }
