@@ -279,6 +279,22 @@ public class AlgorithmsServiceTest {
     }
 
 
+    @Test
+    public void testTopKFrequent(){
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(5);
+        list.add(3);
+        list.add(7);
+        list.add(6);
+        list.add(4);
+        list.add(8);
+        list.add(10);
+        list.add(11);
+        assertEquals(list, algorithmsService.topKFrequent(new int[]{3,2,3,1,2,4,5,5,6,7,7,8,2,3,1,1,1,10,11,5,6,2,4,7,8,5,6}, 10));
+
+    }
 
 
 

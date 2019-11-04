@@ -334,4 +334,19 @@ public interface AlgorithmsService {
 
     //328. https://leetcode.com/problems/odd-even-linked-list/
     public ListNode oddEvenList(ListNode head);
+
+    //344. https://leetcode.com/problems/reverse-string/
+    public void reverseString(char[] s);
+
+    //347. https://leetcode.com/problems/top-k-frequent-elements/
+    public List<Integer> topKFrequent(int[] nums, int k);
+
+    //350. https://leetcode.com/problems/intersection-of-two-arrays-ii/
+    public int[] intersect(int[] nums1, int[] nums2);
+
+    //387. https://leetcode.com/problems/first-unique-character-in-a-string/
+    public int firstUniqChar(String s);
+
+    //412. https://leetcode.com/problems/fizz-buzz/
+    public List<String> fizzBuzz(int n);
 }

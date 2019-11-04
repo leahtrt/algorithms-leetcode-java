@@ -2874,4 +2874,121 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         return head;
     }
 
+    @Override
+    public void reverseString(char[] s) {
+        int left = 0, right = s.length-1;
+        while(left <= right){
+            char temp = s[left];
+            s[left] = s[right];
+            s[right] = temp;
+            left++;
+            right--;
+        }
+    }
+
+    @Override
+    public List<Integer> topKFrequent(int[] nums, int k) {
+        List<Integer> ans = new ArrayList<Integer>();
+        if(nums == null || nums.length == 0 || k < 1){
+            return ans;
+        }
+        HashMap<Integer, Integer> count = new HashMap<>();
+        for(int i = 0; i < nums.length; i++){
+            count.put(nums[i], count.getOrDefault(nums[i], 0) + 1);
+        }
+
+        HashMap<Integer, List<Integer>> countR = new HashMap<>();
+        int[] countArr = new int[count.size()];
+        int i = 0;
+        for (Map.Entry<Integer, Integer> entry : count.entrySet()) {
+            Integer key = entry.getKey();
+            Integer value = entry.getValue();
+            List<Integer> list = countR.getOrDefault(value, new ArrayList<>());
+            if(list.size() == 0){
+                countArr[i++] = value;
+            }
+            list.add(key);
+            countR.put(value, list);
+        }
+
+        Arrays.sort(countArr);
+        for(int j = 0; j < k; j++){
+            if(ans.size() == k){
+                break;
+            }else{
+                int key = countArr[countArr.length - 1 - j];
+                List<Integer> list = countR.get(key);
+                for(int p = 0; p < list.size(); p++){
+                    if(ans.size() == k){
+                        break;
+                    }else{
+                        ans.add(list.get(p));
+                    }
+                }
+            }
+
+
+        }
+        return ans;
+    }
+
+    @Override
+    public int[] intersect(int[] nums1, int[] nums2) {
+        HashMap<Integer, Integer> count = new HashMap<>();
+        for(int i = 0; i < nums1.length; i++){
+            count.put(nums1[i], count.getOrDefault(nums1[i], 0) + 1);
+        }
+        List<Integer> ansList = new ArrayList<>();
+        for(int i = 0; i < nums2.length; i++){
+            if(count.containsKey(nums2[i])){
+                int value = count.get(nums2[i]);
+                if(value > 0){
+                    ansList.add(nums2[i]);
+                    count.put(nums2[i], value-1);
+                }
+            }
+        }
+
+        int[] ans = new int[ansList.size()];
+        for(int i = 0; i < ansList.size(); i++){
+            ans[i] = ansList.get(i);
+        }
+        return ans;
+    }
+
+    @Override
+    public int firstUniqChar(String s) {
+        int[] count = new int[26];
+        for(int i = 0; i < s.length(); i++){
+            char c = s.charAt(i);
+            count[c - 'a'] = count[c - 'a'] + 1;
+        }
+        for(int i = 0; i < s.length(); i++){
+            char c = s.charAt(i);
+            if(count[c - 'a'] == 1){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public List<String> fizzBuzz(int n) {
+        List<String> ans = new ArrayList<>();
+        while(n > 0){
+            if(n % 3 == 0 && n % 5 == 0){
+                ans.add("FizzBuzz");
+            }else if(n % 3 == 0){
+                ans.add("Fizz");
+            }else if(n % 5 == 0){
+                ans.add("Buzz");
+            }else{
+                ans.add("" + n);
+            }
+            n--;
+        }
+        Collections.reverse(ans);
+        return ans;
+    }
+
 }
