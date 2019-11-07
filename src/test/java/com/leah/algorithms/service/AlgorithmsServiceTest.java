@@ -297,6 +297,10 @@ public class AlgorithmsServiceTest {
     }
 
 
+    @Test
+    public void testLongestSubstring(){
+        assertEquals(3, algorithmsService.longestSubstring("aaabb",3));
+    }
 
 
 

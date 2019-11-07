@@ -2991,4 +2991,165 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         return ans;
     }
 
+    @Override
+    public int fourSumCount(int[] A, int[] B, int[] C, int[] D) {
+        if(A == null || B == null || C == null || D == null){
+            return 0;
+        }
+        int n = A.length;
+        if(n == 0){
+            return 0;
+        }
+
+/*        HashMap<Integer, List<List<Integer>>> mapAB = new HashMap<>();
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                int sum = A[i] + B[j];
+                List<Integer> item = new ArrayList<>();
+                item.add(i);
+                item.add(j);
+                if(mapAB.containsKey(sum)){
+                    List<List<Integer>> value = mapAB.get(sum);
+                    value.add(item);
+                    mapAB.put(sum, value);
+                }else{
+                    List<List<Integer>> value = new ArrayList<>();
+                    value.add(item);
+                    mapAB.put(sum, value);
+                }
+            }
+        }
+
+        int ans = 0;
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                int sumCD = C[i] + D[j];
+                if(mapAB.containsKey(-sumCD)){
+                    ans = ans + mapAB.get(-sumCD).size();
+                }
+            }
+        }*/
+
+        //只是记录个数
+        HashMap<Integer, Integer> mapAB = new HashMap<>();
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                int sum = A[i] + B[j];
+                mapAB.put(sum, mapAB.getOrDefault(sum, 0) + 1);
+            }
+        }
+
+        int ans = 0;
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                int sumCD = C[i] + D[j];
+                ans = ans + mapAB.getOrDefault(-sumCD,0);
+            }
+        }
+        return ans;
+    }
+
+    public int longestSubstring(String s, int k) {
+        int ans = 0;
+        for(int i = 0; i < s.length(); i++){
+            for(int j = i + k - 1; j < s.length(); j++){
+                String sub = s.substring(i, j + 1);
+                HashMap<Character, Integer> count = new HashMap<>();
+                for(int p = 0; p < sub.length(); p++){
+                    char c = sub.charAt(p);
+                    count.put(c, count.getOrDefault(c, 0) + 1);
+                }
+                int flag = 1;
+                for(Integer value : count.values()){
+                    if(value < k){
+                        flag = 0;
+                        break;
+                    }
+                }
+                if(flag == 1){
+                    ans = Math.max(ans, j - i + 1);
+                }
+            }
+        }
+        return ans;
+    }
+
+    @Override
+    public int kthSmallest(int[][] matrix, int k) {
+        int n = matrix.length;
+        //max heap
+        PriorityQueue<Integer> pq = new PriorityQueue<>(k+1, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2-o1;
+            }
+        });
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                pq.offer(matrix[i][j]);
+                if(pq.size() > k){
+                    pq.poll();
+                }
+            }
+        }
+        return pq.peek();
+
+    }
+
+    @Override
+    public boolean increasingTriplet(int[] nums) {
+/*        if(nums == null || nums.length == 0){
+            return false;
+        }
+        int[] dp = new int[nums.length];
+        Arrays.fill(dp, 1);
+        for(int i = 1; i < nums.length; i++){
+            for(int j = 0; j < i; j++){
+                if(nums[j] < nums[i]){
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+                if(dp[i] >= 3){
+                    return true;
+                }
+            }
+        }
+        return false;*/
+
+        //O(n) time, O(1) space
+        if(nums == null || nums.length == 0){
+            return false;
+        }
+        int m = Integer.MAX_VALUE, n = Integer.MAX_VALUE;
+        for(int i = 0; i < nums.length; i++){
+            if(nums[i] <= m){
+                m = nums[i];
+            }else if(nums[i] <= n){
+                n = nums[i];
+            }else{
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int lengthOfLIS(int[] nums) {
+        //O(n2)
+        if(nums == null || nums.length == 0){
+            return 0;
+        }
+        int[] dp = new int[nums.length];
+        Arrays.fill(dp, 1);
+        int ans = 1;
+        for(int i = 1; i < nums.length; i++){
+            for(int j = 0; j < i; j++){
+                if(nums[j] < nums[i]){
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+                ans = Math.max(dp[i], ans);
+            }
+        }
+        return ans;
+    }
+
 }

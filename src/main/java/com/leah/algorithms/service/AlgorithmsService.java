@@ -349,4 +349,19 @@ public interface AlgorithmsService {
 
     //412. https://leetcode.com/problems/fizz-buzz/
     public List<String> fizzBuzz(int n);
+
+    //454. https://leetcode.com/problems/4sum-ii/
+    public int fourSumCount(int[] A, int[] B, int[] C, int[] D);
+
+    //395. https://leetcode.com/problems/longest-substring-with-at-least-k-repeating-characters/
+    public int longestSubstring(String s, int k);
+
+    //378. https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/
+    public int kthSmallest(int[][] matrix, int k);
+
+    //334. https://leetcode.com/problems/increasing-triplet-subsequence/
+    public boolean increasingTriplet(int[] nums);
+
+    //300. https://leetcode.com/problems/longest-increasing-subsequence/
+    public int lengthOfLIS(int[] nums);
 }
