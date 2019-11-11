@@ -373,4 +373,11 @@ public interface AlgorithmsService {
 
     //329. https://leetcode.com/problems/longest-increasing-path-in-a-matrix/
     public int longestIncreasingPath(int[][] matrix);
+
+    //341. https://leetcode.com/problems/flatten-nested-list-iterator/
+
+    //380. https://leetcode.com/problems/insert-delete-getrandom-o1/
+
+    //384. https://leetcode.com/problems/shuffle-an-array/
+
 }
