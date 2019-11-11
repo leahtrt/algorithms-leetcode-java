@@ -302,7 +302,15 @@ public class AlgorithmsServiceTest {
         assertEquals(3, algorithmsService.longestSubstring("aaabb",3));
     }
 
+    @Test
+    public void testCoinChange(){
+        assertEquals(3, algorithmsService.coinChange(new int[]{1,2,5,7}, 11));
+    }
 
+    @Test
+    public void testNumSquares(){
+        assertEquals(3, algorithmsService.numSquares(12));
+    }
 
 
 }

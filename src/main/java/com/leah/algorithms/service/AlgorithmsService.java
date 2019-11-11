@@ -364,4 +364,13 @@ public interface AlgorithmsService {
 
     //300. https://leetcode.com/problems/longest-increasing-subsequence/
     public int lengthOfLIS(int[] nums);
+
+    //322. https://leetcode.com/problems/coin-change/
+    public int coinChange(int[] coins, int amount);
+
+    //279. https://leetcode.com/problems/perfect-squares/
+    public int numSquares(int n);
+
+    //329. https://leetcode.com/problems/longest-increasing-path-in-a-matrix/
+    public int longestIncreasingPath(int[][] matrix);
 }

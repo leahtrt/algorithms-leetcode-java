@@ -3152,4 +3152,89 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         return ans;
     }
 
+    public int resCoins = Integer.MAX_VALUE;
+    @Override
+    public int coinChange(int[] coins, int amount) {
+/*        Arrays.sort(coins);
+        helperCoin(coins, coins.length - 1, amount, 0);
+        return resCoins == Integer.MAX_VALUE ? -1 : resCoins;*/
+
+        if(amount < 1){
+            return 0;
+        }
+        int[] dp = new int[amount+1];
+        Arrays.fill(dp,amount + 1);
+        dp[0] = 0;
+        for(int i = 1; i < amount + 1; i++){
+            for(int j = 0; j < coins.length; j++){
+                if(coins[j] <= i){
+                    dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
+                }
+            }
+        }
+        return dp[amount] >= amount + 1 ? -1 : dp[amount];
+    }
+
+
+    public void helperCoin(int[] coins, int start, int amount, int cur){
+        if(amount < 0) return;
+        if(amount == 0){
+            resCoins = Math.min(resCoins, cur);
+            return;
+        }
+        for(int i = start; i >= 0; i--){
+            helperCoin(coins, i, amount - coins[i], cur + 1);
+        }
+    }
+
+    @Override
+    public int numSquares(int n) {
+        int[] dp = new int[n+1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+        for(int i = 0; i <= n; i++){
+            for(int j = 1; i + j * j <= n; j++){
+                dp[i+j*j] = Math.min(dp[i] + 1, dp[i+j*j]);
+            }
+        }
+        return dp[n];
+    }
+    public int[][] direction = {
+            {-1,0},
+            {1,0},
+            {0,-1},
+            {0,1}
+    };
+    @Override
+    public int longestIncreasingPath(int[][] matrix) {
+        if(matrix == null || matrix.length == 0 || matrix[0].length ==0){
+            return 0;
+        }
+        int res = 1;
+        int m = matrix.length, n = matrix[0].length;
+        int[][] dp = new int[m][n];
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                res = Math.max(res, dfsHelper(matrix, dp, i, j));
+            }
+        }
+        return res;
+    }
+
+    public int dfsHelper(int[][] matrix, int[][]dp, int x, int y){
+        if(dp[x][y] > 0) return dp[x][y];
+        int ans = 1, m = matrix.length, n = matrix[0].length;
+        for(int d = 0; d < 4; d++){
+            int i = x + direction[d][0];
+            int j = y + direction[d][1];
+            if(i < 0 || j < 0 || i >= m || j >= n || matrix[x][y] >= matrix[i][j]){
+                continue;
+            }
+            int len = 1 + dfsHelper(matrix, dp, i, j);
+            ans = Math.max(ans, len);
+        }
+        dp[x][y] = ans;
+        return ans;
+    }
+
 }
