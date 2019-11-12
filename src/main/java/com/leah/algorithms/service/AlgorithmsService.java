@@ -380,4 +380,15 @@ public interface AlgorithmsService {
 
     //384. https://leetcode.com/problems/shuffle-an-array/
 
+    //32. https://leetcode.com/problems/longest-valid-parentheses/
+    public int longestValidParentheses(String s);
+
+    //142. https://leetcode.com/problems/linked-list-cycle-ii/
+    public ListNode detectCycle(ListNode head);
+
+    //221. https://leetcode.com/problems/maximal-square/
+    public int maximalSquare(char[][] matrix);
+
+    //647. https://leetcode.com/problems/palindromic-substrings/
+    public int countSubstrings(String s);
 }

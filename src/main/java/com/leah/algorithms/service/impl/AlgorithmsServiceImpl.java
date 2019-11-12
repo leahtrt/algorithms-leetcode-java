@@ -3237,4 +3237,147 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         return ans;
     }
 
+    @Override
+    public int longestValidParentheses(String s) {
+        //stack
+        int ans = 0;
+        Stack<Integer> stack = new Stack<>();
+        stack.push(-1);
+        for(int i = 0; i < s.length(); i++){
+            if(s.charAt(i) == '('){
+                stack.push(i);
+            }else{
+                stack.pop();
+                if(stack.empty()){
+                    stack.push(i);
+                }else{
+                    ans = Math.max(ans, i - stack.peek());
+                }
+            }
+        }
+        return ans;
+    }
+
+    @Override
+    public ListNode detectCycle(ListNode head) {
+        if(head == null || head.next == null){
+            return null;
+        }
+        ListNode fast = head, slow = head;
+        while(fast != null && fast.next != null && slow != null){
+            fast = fast.next.next;
+            slow = slow.next;
+            if(fast == slow){
+                break;
+            }
+        }
+        if(fast == null || slow == null || fast.next == null) return null;
+        slow = head;
+        while(fast != slow){
+            fast = fast.next;
+            slow = slow.next;
+        }
+        return fast;
+    }
+
+    @Override
+    public int maximalSquare(char[][] matrix) {
+        /*//brute force
+        if(matrix == null || matrix.length == 0 || matrix[0].length == 0){
+            return 0;
+        }
+        int m = matrix.length, n = matrix[0].length;
+        int maxLen = 0;
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(matrix[i][j] == '1'){
+                    int maxLenTemp = 1;
+                    boolean flag = true;
+                    while(flag && i + maxLenTemp < m && j + maxLenTemp < n){
+                        for(int k = i; k <= i + maxLenTemp; k++){
+                            if(matrix[k][j + maxLenTemp] == '0'){
+                                flag = false;
+                                break;
+                            }
+                        }
+                        for(int k = j; k <= j + maxLenTemp; k++){
+                            if(matrix[i + maxLenTemp][k] == '0'){
+                                flag = false;
+                                break;
+                            }
+                        }
+                        if(flag){
+                            maxLenTemp++;
+                        }
+                    }
+
+                    maxLen = Math.max(maxLen, maxLenTemp);
+                }
+            }
+        }
+
+        return maxLen * maxLen;*/
+
+        //dp[][]
+        if(matrix == null || matrix.length == 0 || matrix[0].length == 0){
+            return 0;
+        }
+        int m = matrix.length, n = matrix[0].length;
+        int maxLen = 0;
+        int[][] dp = new int[m+1][n+1];
+        for(int i = 1; i <= m; i++){
+            for(int j = 1; j <= n; j++){
+                if(matrix[i-1][j-1] == '1'){
+                    dp[i][j] = Math.min(Math.min(dp[i-1][j], dp[i][j-1]),dp[i-1][j-1]) + 1;
+                    maxLen = Math.max(maxLen, dp[i][j]);
+                }
+            }
+        }
+        return maxLen * maxLen;
+    }
+
+    @Override
+    public int countSubstrings(String s) {
+      /*  //brute force
+        int ans = 0;
+        for(int i = 0; i < s.length(); i++){
+            for(int j = i; j < s.length(); j++){
+                if(isPalindromic(s,i,j)){
+                    ans++;
+                }
+            }
+        }
+        return ans;*/
+
+        //expand from center
+        int ans = 0;
+        for(int i = 0; i < s.length(); i++){
+            ans = countHelper(s, i, i, ans);
+            ans = countHelper(s, i, i+1, ans);
+        }
+        return ans;
+    }
+
+    public int countHelper(String s, int i, int j, int ans){
+        while(i >= 0 && j < s.length() && s.charAt(i) == s.charAt(j)){
+            i--;
+            j++;
+            ans++;
+        }
+        return ans;
+    }
+
+    public boolean isPalindromic(String s, int left, int right){
+        while(left < right){
+            if(s.charAt(left) == s.charAt(right)){
+                left++;
+                right--;
+                continue;
+            }else{
+                return false;
+            }
+
+        }
+        return true;
+    }
 }
