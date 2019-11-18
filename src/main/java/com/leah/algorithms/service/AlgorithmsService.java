@@ -391,4 +391,10 @@ public interface AlgorithmsService {
 
     //647. https://leetcode.com/problems/palindromic-substrings/
     public int countSubstrings(String s);
+
+    //994. https://leetcode.com/problems/rotting-oranges/
+    public int orangesRotting(int[][] grid);
+
+    //937. https://leetcode.com/problems/reorder-data-in-log-files/
+    public String[] reorderLogFiles(String[] logs);
 }

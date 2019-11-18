@@ -2,6 +2,7 @@ package com.leah.algorithms.service.impl;
 
 import com.leah.algorithms.datastructure.ListNode;
 import com.leah.algorithms.datastructure.Node;
+import com.leah.algorithms.datastructure.Position;
 import com.leah.algorithms.datastructure.TreeNode;
 import com.leah.algorithms.service.AlgorithmsService;
 import javafx.util.Pair;
@@ -3380,4 +3381,101 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         }
         return true;
     }
+
+    public int orangesRotting(int[][] grid) {
+        if(grid == null || grid.length == 0 || grid[0].length == 0) return 0;
+        int m = grid.length, n = grid[0].length;
+        int fresh = 0, rotten = 0;
+        Queue<Position> q = new ArrayDeque<>();
+
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(grid[i][j] == 2){
+                    q.add(new Position(i, j));
+                    rotten++;
+                }
+                if(grid[i][j] == 1){
+                    fresh++;
+                }
+            }
+        }
+        if(fresh == 0) return 0;
+        if(rotten == 0) return -1;
+        if(rotten == m * n) return 0;
+
+        int minutes = 1;
+        int[][] direction = {{1,0},{-1,0},{0,1},{0,-1}};
+        while(!q.isEmpty()){
+            for(int i = q.size(); i > 0; i--){
+                Position p = q.poll();
+                for(int[] dir: direction){
+                    int curX = p.x + dir[0];
+                    int curY = p.y + dir[1];
+                    if(isNotRottenAndNotEmpty(grid, curX, curY)){
+                        fresh--;
+                        rotten++;
+                        grid[curX][curY] = 2;
+                        q.add(new Position(curX, curY));
+                    }
+                    if(fresh == 0) return minutes;
+                }
+            }
+            minutes++;
+        }
+        if(fresh > 0) return -1;
+        return minutes;
+    }
+
+    public boolean isNotRottenAndNotEmpty(int[][] grid, int i, int j){
+        if(i >= 0 && i < grid.length && j >= 0 && j < grid[0].length && grid[i][j] == 1){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String[] reorderLogFiles(String[] logs) {
+        if(logs == null || logs.length == 0) return logs;
+        List<String> letterLogs = new ArrayList<>();
+        List<String> digitLogs = new ArrayList<>();
+        for(int i = 0; i < logs.length; i++){
+            int index = logs[i].indexOf(" ");
+            if(logs[i].charAt(index + 1) >= '0' && logs[i].charAt(index + 1) <= '9'){
+                digitLogs.add(logs[i]);
+            }else{
+                letterLogs.add(logs[i]);
+            }
+        }
+
+        Collections.sort(letterLogs, new Comparator<String>(){
+            @Override
+            public int compare(String s1, String s2){
+                int index1 = s1.indexOf(" ");
+                String id1 = s1.substring(0, index1);
+                String content1 = s1.substring(index1 + 1);
+
+                int index2 = s2.indexOf(" ");
+                String id2 = s2.substring(0, index2);
+                String content2 = s2.substring(index2 + 1);
+
+                int v1 = content1.compareTo(content2);
+                if(v1 != 0) return v1;
+                int v2 = id1.compareTo(id2);
+                return v2;
+            }
+        });
+
+        String[] newLogs = new String[logs.length];
+        for(int i = 0; i < letterLogs.size(); i++){
+            newLogs[i] = letterLogs.get(i);
+        }
+
+        for(int i = 0; i < digitLogs.size(); i++){
+            newLogs[i + letterLogs.size()] = digitLogs.get(i);
+        }
+        return newLogs;
+
+
+    }
+
 }
