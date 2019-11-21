@@ -3478,4 +3478,94 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
 
     }
 
+    @Override
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        int[] order = new int[numCourses];
+        if(prerequisites == null || prerequisites.length == 0 || prerequisites[0].length == 0){
+            for(int i = 0; i < numCourses; i++){
+                order[i] = i;
+            }
+            return order;
+        }
+
+        HashMap<Integer, HashSet<Integer>> adj = new HashMap<>();
+        int[] degree = new int[numCourses];
+        for(int i = 0; i < numCourses; i++){
+            adj.put(i, new HashSet<>());
+        }
+        for(int i = 0; i < prerequisites.length; i++){
+            int in = prerequisites[i][0];
+            int out = prerequisites[i][1];
+            HashSet<Integer> set = adj.get(out);
+            set.add(in);
+            adj.put(out, set);
+            degree[in] = degree[in] + 1;
+        }
+
+        Queue<Integer> q = new ArrayDeque<>();
+        for(int i = 0; i < degree.length; i++){
+            if(degree[i] == 0){
+                q.offer(i);
+            }
+        }
+        int index = 0;
+        while(!q.isEmpty()){
+            int n = q.poll();
+            order[index++] = n;
+            HashSet<Integer> edges = adj.get(n);
+            for(int e : edges){
+                degree[e] = degree[e] - 1;
+                if(degree[e] == 0){
+                    q.offer(e);
+                }
+            }
+        }
+
+        if(index == numCourses) return order;
+        return new int[0];
+    }
+
+    @Override
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        if(numCourses <= 0) return false;
+        HashMap<Integer, HashSet<Integer>> adj = new HashMap<>();
+        int[] degree = new int[numCourses];
+        for(int i = 0; i < numCourses; i++){
+            adj.put(i, new HashSet<>());
+        }
+
+        for(int i = 0; i < prerequisites.length; i++){
+            int n = prerequisites[i][1];
+            HashSet<Integer> edges = adj.get(n);
+            edges.add(prerequisites[i][0]);
+            adj.put(n, edges);
+            degree[prerequisites[i][0]] = degree[prerequisites[i][0]] + 1;
+        }
+
+        Queue<Integer> q = new ArrayDeque<>();
+        for(int i = 0; i < degree.length; i++){
+            if(degree[i] == 0){
+                q.offer(i);
+            }
+        }
+
+        while(!q.isEmpty()){
+            int node = q.poll();
+            HashSet<Integer> edges = adj.get(node);
+            for(int e : edges){
+                degree[e] = degree[e] - 1;
+                if(degree[e] == 0){
+                    q.offer(e);
+                }
+            }
+        }
+        for(int i = 0; i < degree.length; i++){
+            if(degree[i] > 0){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }

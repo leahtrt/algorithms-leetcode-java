@@ -397,4 +397,10 @@ public interface AlgorithmsService {
 
     //937. https://leetcode.com/problems/reorder-data-in-log-files/
     public String[] reorderLogFiles(String[] logs);
+
+    //210. https://leetcode.com/problems/course-schedule-ii/
+    public int[] findOrder(int numCourses, int[][] prerequisites);
+
+    //207. https://leetcode.com/problems/course-schedule/
+    public boolean canFinish(int numCourses, int[][] prerequisites);
 }
