@@ -8,12 +8,12 @@ public class NestedIterator implements Iterator<Integer> {
 
     private Queue<Integer> q;
 
-    public NestedIterator(List<NestedInteger> nestedList) {
+/*    public NestedIterator(List<NestedInteger> nestedList) {
         q = new LinkedList<>();
         getNested(nestedList);
-    }
+    }*/
 
-    private void getNested(List<NestedInteger> nestedList){
+/*    private void getNested(List<NestedInteger> nestedList){
         for(int i = 0; i < nestedList.size(); i++){
             if(nestedList.get(i).isInteger()){
                 q.add(nestedList.get(i).getInteger());
@@ -21,7 +21,7 @@ public class NestedIterator implements Iterator<Integer> {
                 getNested(nestedList.get(i).getList());
             }
         }
-    }
+    }*/
 
     @Override
     public Integer next() {

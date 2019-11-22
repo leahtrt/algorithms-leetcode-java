@@ -2581,7 +2581,7 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
 
     @Override
     public int[] maxSlidingWindow(int[] nums, int k) {
-        if(nums == null || nums.length == 0) return nums;
+ /*       if(nums == null || nums.length == 0) return nums;
         List<Integer> list = new ArrayList<>();
         for(int i = 0; i <= nums.length - k; i++){
             int max = Integer.MIN_VALUE;
@@ -2599,7 +2599,28 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         for(int i = 0; i < list.size(); i++){
             ans[i] = list.get(i);
         }
-        return ans;
+        return ans;*/
+
+        // Given nums = [1,3,-1,-3,5,3,6,7], and k = 3.
+        if(k==0) return new int[0];
+
+        LinkedList<Integer> q = new LinkedList<Integer>();
+
+        int[] res = new int[nums.length-k+1];
+
+        for(int i=0; i<nums.length; i++) {
+            while(!q.isEmpty() && nums[i]>=nums[q.getLast()]){
+                q.removeLast();
+            }
+            q.addLast(i);
+
+            if(i-q.getFirst()+1 > k) {
+                q.removeFirst();
+            }
+            if(i+1>=k) res[i-k+1] = nums[q.getFirst()];
+        }
+
+        return res;
     }
 
     @Override
@@ -3568,4 +3589,101 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         return true;
     }
 
+    @Override
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>((x, y) -> y - x);
+        for(int i = 0; i < nums.length; i++){
+            pq.add(nums[i]);
+        }
+        for(int i = 0; i < k - 1; i++){
+            pq.poll();
+        }
+        return pq.peek();
+    }
+
+    @Override
+    public List<List<String>> accountsMerge(List<List<String>> accounts) {
+        HashMap<String, HashSet<String>> adj = new HashMap<>();
+        HashMap<String, String> map = new HashMap<>();
+        HashSet<String> nodes = new HashSet<>();
+        for(int i = 0; i < accounts.size(); i++){
+            List<String> account = accounts.get(i);
+            String name = account.get(0);
+            HashSet<String> edges = new HashSet<>();
+            for(int j = 1; j < account.size(); j++){
+                edges.add(account.get(j));
+                nodes.add(account.get(j));
+                map.put(account.get(j), name);
+            }
+            for(String n : edges){
+                HashSet<String> temp = adj.getOrDefault(n, new HashSet<>());
+                temp.addAll(edges);
+                adj.put(n, temp);
+            }
+        }
+
+        HashMap<String, Boolean> visited = new HashMap<>();
+        List<List<String>> ans = new ArrayList<>();
+        for(String n : nodes){
+            if(visited.getOrDefault(n, false) == false){
+                visited.put(n, true);
+
+                List<String> item = new ArrayList<>();
+
+                Stack<String> stack = new Stack<>();
+                stack.push(n);
+                while(!stack.empty()){
+                    String s = stack.pop();
+                    item.add(s);
+                    HashSet<String> edges = adj.get(s);
+                    for(String e : edges){
+                        if(visited.getOrDefault(e, false) == false){
+                            visited.put(e, true);
+                            stack.push(e);
+                        }
+                    }
+                }
+
+                Collections.sort(item);
+                item.add(0, map.get(n));//name
+                ans.add(item);
+            }
+        }
+        return ans;
+    }
+
+    @Override
+    public int[] asteroidCollision(int[] asteroids) {
+        if(asteroids == null || asteroids.length == 0) return asteroids;
+        Stack<Integer> stack = new Stack<>();
+        for(int i = 0; i < asteroids.length; i++){
+            int flag = 0;
+            while(!stack.empty() && asteroids[i] < 0 && stack.peek() > 0){
+                int pre = stack.peek();
+                if(Math.abs(pre) == Math.abs(asteroids[i])){
+                    stack.pop();
+                    flag = 1;
+                    break;
+                }else if(Math.abs(pre) < Math.abs(asteroids[i])){
+                    stack.pop();
+                    continue;
+                }else{
+                    flag = 1;
+                    break;
+                }
+                //break;
+            }
+            if(flag == 1) continue;
+            stack.push(asteroids[i]);
+        }
+
+        int[] ans = new int[stack.size()];
+        int index = stack.size() - 1;
+        while(!stack.empty()){
+            int n = stack.peek();
+            ans[index--] = n;
+            stack.pop();
+        }
+        return ans;
+    }
 }

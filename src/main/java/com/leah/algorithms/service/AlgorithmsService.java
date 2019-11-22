@@ -403,4 +403,13 @@ public interface AlgorithmsService {
 
     //207. https://leetcode.com/problems/course-schedule/
     public boolean canFinish(int numCourses, int[][] prerequisites);
+
+    //215. https://leetcode.com/problems/kth-largest-element-in-an-array/
+    public int findKthLargest(int[] nums, int k);
+
+    //721. https://leetcode.com/problems/accounts-merge/
+    public List<List<String>> accountsMerge(List<List<String>> accounts);
+
+    //735. https://leetcode.com/problems/asteroid-collision/
+    public int[] asteroidCollision(int[] asteroids);
 }

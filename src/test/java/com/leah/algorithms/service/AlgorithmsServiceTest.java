@@ -312,5 +312,64 @@ public class AlgorithmsServiceTest {
         assertEquals(3, algorithmsService.numSquares(12));
     }
 
+    @Test
+    public void testKthLargest(){
+        assertEquals(5, algorithmsService.findKthLargest(new int[]{3,2,1,5,6,4},2));
+    }
 
+    @Test
+    public void testMaxSlidingWindow(){
+        assertArrayEquals(new int[]{3,3,5,5,6,7}, algorithmsService.maxSlidingWindow(new int[]{1,3,-1,-3,5,3,6,7},3));
+    }
+
+    @Test
+    public void testAccountsMerge(){
+        List<String> item1 = new ArrayList<>();
+        item1.add("David");
+        item1.add("David0@m.co");
+        item1.add("David4@m.co");
+        item1.add("David3@m.co");
+        List<String> item2 = new ArrayList<>();
+        item2.add("David");
+        item2.add("David5@m.co");
+        item2.add("David5@m.co");
+        item2.add("David0@m.co");
+        List<String> item3 = new ArrayList<>();
+        item3.add("David");
+        item3.add("David1@m.co");
+        item3.add("David4@m.co");
+        item3.add("David0@m.co");
+        List<String> item4 = new ArrayList<>();
+        item4.add("David");
+        item4.add("David0@m.co");
+        item4.add("David1@m.co");
+        item4.add("David3@m.co");
+        List<String> item5 = new ArrayList<>();
+        item5.add("David");
+        item5.add("David4@m.co");
+        item5.add("David1@m.co");
+        item5.add("David3@m.co");
+        List<List<String>> list = new ArrayList<>();
+        list.add(item1);
+        list.add(item2);
+        list.add(item3);
+        list.add(item4);
+        list.add(item5);
+
+        List<List<String>> expt = new ArrayList<>();
+        List<String> item = new ArrayList<>();
+        item.add("David");
+        item.add("David0@m.co");
+        item.add("David1@m.co");
+        item.add("David3@m.co");
+        item.add("David4@m.co");
+        item.add("David5@m.co");
+        expt.add(item);
+        assertEquals(expt, algorithmsService.accountsMerge(list));
+    }
+
+    @Test
+    public void testAsteriodCollision(){
+        assertArrayEquals(new int[]{-2,-1,2,1}, algorithmsService.asteroidCollision(new int[]{-2,-1,2,1}));
+    }
 }
