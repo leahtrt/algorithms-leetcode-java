@@ -372,4 +372,14 @@ public class AlgorithmsServiceTest {
     public void testAsteriodCollision(){
         assertArrayEquals(new int[]{-2,-1,2,1}, algorithmsService.asteroidCollision(new int[]{-2,-1,2,1}));
     }
+
+    @Test
+    public void testFindAnagrams(){
+        List<Integer> list = new ArrayList<>();
+        list.add(0);
+        list.add(1);
+        list.add(2);
+        assertEquals(list, algorithmsService.findAnagrams("abab","ab"));
+    }
+
 }

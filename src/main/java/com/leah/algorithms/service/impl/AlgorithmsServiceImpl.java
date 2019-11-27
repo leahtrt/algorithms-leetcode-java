@@ -3686,4 +3686,69 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         }
         return ans;
     }
+
+    @Override
+    public int[][] kClosest(int[][] points, int K) {
+        if(points == null || points.length == 0 || points[0].length == 0) return points;
+        PriorityQueue<Map.Entry<Integer, Integer>> pq = new PriorityQueue<>((a,b) -> a.getValue()-b.getValue());
+        int[][] ans = new int[K][2];
+        HashMap<Integer, Integer> items = new HashMap<>();
+        for(int i = 0; i < points.length; i++){
+            HashMap<Integer, Integer> item = new HashMap<>();
+            int distance = points[i][0] * points[i][0] + points[i][1] * points[i][1];
+            items.put(i, distance);
+
+        }
+        for(Map.Entry<Integer, Integer> entry : items.entrySet()){
+            pq.offer(entry);
+        }
+        for(int i = 0; i < K; i++){
+            int index = pq.poll().getKey();
+            ans[i][0] = points[index][0];
+            ans[i][1] = points[index][1];
+        }
+        return ans;
+    }
+
+    @Override
+    public List<Integer> findAnagrams(String s, String p) {
+       /* if(s.isEmpty() || p.isEmpty()) return new ArrayList<>();
+        List<Integer> ans = new ArrayList<>();
+        int len = p.length();
+        int[] count = new int[26];
+        for(int i = 0; i < len; i++){
+            count[p.charAt(i) - 'a'] =  count[p.charAt(i) - 'a'] + 1;
+        }
+        for(int i = 0; i <= s.length() - len; i++){
+            int[] temp = Arrays.copyOf(count, 26);
+            int success = 1;
+            for(int j = i; j < i + len; j++){
+                temp[s.charAt(j) - 'a'] = temp[s.charAt(j) - 'a'] - 1;
+                if(temp[s.charAt(j) - 'a'] < 0){
+                    success = 0;
+                    break;
+                }
+            }
+            if(success == 1){
+                ans.add(i);
+            }
+        }
+        return ans;*/
+
+       //sliding window
+        if(s.isEmpty() || p.isEmpty()) return new ArrayList<>();
+        List<Integer> ans = new ArrayList<>();
+        int len = p.length();
+        int[] count = new int[26];
+        for(int i = 0; i < len; i++){
+            count[p.charAt(i) - 'a'] =  count[p.charAt(i) - 'a'] + 1;
+        }
+        int left = 0, right = 0, cur = 0;
+        while(right < s.length()){
+            if(--count[s.charAt(right++) - 'a'] >= 0) cur++;
+            if(cur == len) ans.add(left);
+            if(right - left == len && count[s.charAt(left++) - 'a']++ >= 0) cur--;
+        }
+        return ans;
+    }
 }

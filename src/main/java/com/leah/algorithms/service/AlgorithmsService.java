@@ -412,4 +412,10 @@ public interface AlgorithmsService {
 
     //735. https://leetcode.com/problems/asteroid-collision/
     public int[] asteroidCollision(int[] asteroids);
+
+    //973. https://leetcode.com/problems/k-closest-points-to-origin/
+    public int[][] kClosest(int[][] points, int K);
+
+    //438. https://leetcode.com/problems/find-all-anagrams-in-a-string/
+    public List<Integer> findAnagrams(String s, String p);
 }
