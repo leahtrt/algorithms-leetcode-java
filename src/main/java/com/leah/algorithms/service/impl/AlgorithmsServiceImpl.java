@@ -3751,4 +3751,88 @@ public class AlgorithmsServiceImpl implements AlgorithmsService {
         }
         return ans;
     }
+
+    @Override
+    public int maxSum(int[] nums){
+
+        HashMap<Integer, List<Integer>> map = new HashMap<>();
+        for(int i = 0; i < nums.length; i++){
+            int key = computeDigitsSum(nums[i]);
+            List<Integer> list = map.getOrDefault(key, new ArrayList<>());
+            list.add(nums[i]);
+            Collections.sort(list);
+            map.put(key, list);
+        }
+
+        int max = Integer.MIN_VALUE;
+        for(Map.Entry<Integer, List<Integer>> entry : map.entrySet()){
+            List<Integer> list = entry.getValue();
+            int lastIndex = list.size() - 1;
+            max = Math.max(max, list.get(lastIndex) + list.get(lastIndex-1));
+        }
+
+        return max;
+    }
+
+    public int computeDigitsSum(int a){
+        a = Math.abs(a);
+        int sum = 0;
+        while(a > 10){
+            sum = sum + a % 10;
+            a = a / 10;
+        }
+        sum = sum + a;
+        return sum;
+    }
+
+    public boolean IsBalancedString(String s) {
+        if(s.isEmpty()) return true;
+        HashMap<Character, Integer> count = new HashMap<>();
+        for(int i = 0; i < s.length(); i++){
+            count.put(s.charAt(i), count.getOrDefault(s.charAt(i), 0) + 1);
+        }
+        int countAC = count.getOrDefault('a', 0) + count.getOrDefault('c', 0);
+        int countBD = count.getOrDefault('b', 0) + count.getOrDefault('d', 0);
+        if((countAC % 2 == 0) && (countBD % 2 == 0)) return true;
+        return false;
+    }
+
+    public HashMap<Integer, HashSet<Integer>> findEmployees(List<List<Integer>> data){
+        HashMap<Integer,HashSet<Integer>> adj = new HashMap<>();
+        HashSet<Integer> nodes = new HashSet<>();
+        for(int i = 0; i < data.size(); i++){
+            nodes.add(data.get(i).get(0));
+            nodes.add(data.get(i).get(1));
+            HashSet<Integer> edges = adj.getOrDefault(data.get(i).get(1), new HashSet<>());
+            edges.add(data.get(i).get(0));
+            adj.put(data.get(i).get(1), edges);
+        }
+        HashMap<Integer, HashSet<Integer>> ans = new HashMap<>();
+        for(int node : nodes){
+            HashSet<Integer> employees = adj.getOrDefault(node, new HashSet<>());
+            if(employees.size() > 0){
+                HashMap<Integer, Boolean> visited = new HashMap<>();
+                Queue<Integer> q = new ArrayDeque<>();
+                for(int e : employees){
+                    q.offer(e);
+                }
+                while(!q.isEmpty()){
+                    int e = q.poll();
+                    if(!visited.getOrDefault(e, false)){
+                        employees.add(e);
+                        visited.put(e, true);
+                        HashSet<Integer> subE = adj.getOrDefault(e, new HashSet<>());
+                        if(subE.size() > 0){
+                            for(int e2 : subE){
+                                q.offer(e2);
+                            }
+                        }
+                    }
+                }
+            }
+            ans.put(node, employees);
+        }
+        
+        return ans;
+    }
 }

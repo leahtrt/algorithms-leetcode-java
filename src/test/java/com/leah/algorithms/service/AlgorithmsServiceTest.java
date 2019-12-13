@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -380,6 +383,49 @@ public class AlgorithmsServiceTest {
         list.add(1);
         list.add(2);
         assertEquals(list, algorithmsService.findAnagrams("abab","ab"));
+    }
+
+    @Test
+    public void testMaxSum(){
+        assertEquals(93, algorithmsService.maxSum(new int[]{51, 71, 17, 42, 129}));
+    }
+
+    @Test
+    public void test(){
+        assertEquals(true, algorithmsService.IsBalancedString("acdbddbbbbaaac"));
+    }
+
+
+    @Test
+    public void testFindEmployees(){
+        List<Integer> l1 = new ArrayList<>();
+        l1.add(1);
+        l1.add(3);
+        List<Integer> l2 = new ArrayList<>();
+        l2.add(2);
+        l2.add(3);
+        List<Integer> l3 = new ArrayList<>();
+        l3.add(3);
+        l3.add(6);
+        List<Integer> l4 = new ArrayList<>();
+        l4.add(4);
+        l4.add(5);
+        List<Integer> l5 = new ArrayList<>();
+        l5.add(5);
+        l5.add(6);
+        List<Integer> l6 = new ArrayList<>();
+        l6.add(6);
+        l6.add(6);
+        List<List<Integer>> list = new ArrayList<>();
+        list.add(l1);
+        list.add(l2);
+        list.add(l3);
+        list.add(l4);
+        list.add(l5);
+        list.add(l6);
+        HashMap<Integer, HashSet<Integer>> map = new HashMap<Integer, HashSet<Integer>>();
+        map.put(1, new HashSet<>());
+        
     }
 
 }

@@ -4,6 +4,8 @@ import com.leah.algorithms.datastructure.ListNode;
 import com.leah.algorithms.datastructure.Node;
 import com.leah.algorithms.datastructure.TreeNode;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public interface AlgorithmsService {
@@ -418,4 +420,10 @@ public interface AlgorithmsService {
 
     //438. https://leetcode.com/problems/find-all-anagrams-in-a-string/
     public List<Integer> findAnagrams(String s, String p);
+
+    public int maxSum(int[] nums);
+
+    public boolean IsBalancedString(String s);
+
+    public HashMap<Integer, HashSet<Integer>> findEmployees(List<List<Integer>> data);
 }
